@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+import "google/protobuf/any.proto";
+
+option csharp_namespace = "FlashElf.ChaosKit.Protos";
+
+service ChaosProto {
+  rpc Send (ChaosRequest) returns (ChaosReply);
+}
+
+message ChaosRequest {
+  string InterfaceName = 1;
+  string MethodName = 2;
+  bytes Parameters = 3;
+}
+
+message ChaosReply {
+  bytes Data=1;
+}
