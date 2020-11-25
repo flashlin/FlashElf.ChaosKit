@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlashElf.ChaosKit\FlashElf.ChaosKit\FlashElf.ChaosKit.csproj" />
+    <ProjectReference Include="..\FlashElf.ChaosKit\FlashElf.ChaosKit.csproj" />
   </ItemGroup>
 
 </Project>

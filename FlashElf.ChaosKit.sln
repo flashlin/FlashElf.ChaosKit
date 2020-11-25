@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashElf.ChaosKit", "FlashElf.ChaosKit\FlashElf.ChaosKit.csproj", "{BAC1097C-48D8-492A-AD08-7358035F201A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaosSite", "..\ChaosSite\ChaosSite.csproj", "{1B8C3996-3677-4D08-AD0A-7219506AB426}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaosSite", "ChaosSite\ChaosSite.csproj", "{F2357125-7246-458D-A46E-AA7ABA02D22F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{BAC1097C-48D8-492A-AD08-7358035F201A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAC1097C-48D8-492A-AD08-7358035F201A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAC1097C-48D8-492A-AD08-7358035F201A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B8C3996-3677-4D08-AD0A-7219506AB426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B8C3996-3677-4D08-AD0A-7219506AB426}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B8C3996-3677-4D08-AD0A-7219506AB426}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B8C3996-3677-4D08-AD0A-7219506AB426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
