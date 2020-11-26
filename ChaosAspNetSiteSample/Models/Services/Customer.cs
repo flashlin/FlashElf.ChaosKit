@@ -3,7 +3,7 @@
 namespace ChaosAspNetSiteSample.Models.Services
 {
 	[Serializable]
-	public class Customr
+	public class Customer
 	{
 		public string Name { get; set; }
 	}

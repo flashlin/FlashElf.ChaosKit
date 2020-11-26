@@ -375,7 +375,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Services\Customr.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\Services\Customer.cs" />
     <Compile Include="Models\Services\IMyRepo.cs" />
     <Compile Include="Models\Services\MyRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

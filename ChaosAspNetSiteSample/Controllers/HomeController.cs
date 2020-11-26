@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ChaosAspNetSiteSample.Models;
 using ChaosAspNetSiteSample.Models.Services;
 
 namespace ChaosAspNetSiteSample.Controllers
 {
 	public class HomeController : Controller
 	{
-		private IMyRepo _myRepo;
+		private readonly IMyRepo _myRepo;
 
 		public HomeController(IMyRepo myRepo)
 		{
@@ -18,8 +19,11 @@ namespace ChaosAspNetSiteSample.Controllers
 
 		public ActionResult Index()
 		{
-			var customer = _myRepo.GetCustomr();
-			return View();
+			var vm = new HomeViewModel()
+			{
+				Customer = _myRepo.GetCustomer()
+			};
+			return View(vm);
 		}
 
 		public ActionResult About()

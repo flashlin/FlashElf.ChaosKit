@@ -2,6 +2,6 @@
 {
 	public interface IMyRepo
 	{
-		Customr GetCustomr();
+		Customer GetCustomer();
 	}
 }

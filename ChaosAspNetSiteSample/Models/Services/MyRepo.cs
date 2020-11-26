@@ -8,9 +8,9 @@ namespace ChaosAspNetSiteSample.Models.Services
 {
 	public class MyRepo : IMyRepo
 	{
-		public Customr GetCustomr()
+		public Customer GetCustomer()
 		{
-			return new Customr()
+			return new Customer()
 			{
 				Name = "Flash"
 			};
