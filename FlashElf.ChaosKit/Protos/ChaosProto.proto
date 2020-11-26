@@ -1,5 +1,4 @@
 ﻿syntax = "proto3";
-import "google/protobuf/any.proto";
 
 option csharp_namespace = "FlashElf.ChaosKit.Protos";
 
