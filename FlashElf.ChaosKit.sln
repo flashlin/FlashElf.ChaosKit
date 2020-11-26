@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashElf.ChaosKit", "FlashElf.ChaosKit\FlashElf.ChaosKit.csproj", "{BAC1097C-48D8-492A-AD08-7358035F201A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaosSite", "ChaosSite\ChaosSite.csproj", "{F2357125-7246-458D-A46E-AA7ABA02D22F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaosSiteSample", "ChaosSite\ChaosSiteSample.csproj", "{F2357125-7246-458D-A46E-AA7ABA02D22F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashElf.ChaosKit.Autofac", "FlashElf.ChaosKit.Autofac\FlashElf.ChaosKit.Autofac.csproj", "{F298F4C1-1CF5-4675-B809-D31BBC63CC22}"
 EndProject
