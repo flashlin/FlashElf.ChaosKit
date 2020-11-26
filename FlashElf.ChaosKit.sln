@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashElf.ChaosKit", "FlashE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaosSite", "ChaosSite\ChaosSite.csproj", "{F2357125-7246-458D-A46E-AA7ABA02D22F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashElf.ChaosKit.Autofac", "FlashElf.ChaosKit.Autofac\FlashElf.ChaosKit.Autofac.csproj", "{F298F4C1-1CF5-4675-B809-D31BBC63CC22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosAspNetSiteSample", "ChaosAspNetSiteSample\ChaosAspNetSiteSample.csproj", "{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
