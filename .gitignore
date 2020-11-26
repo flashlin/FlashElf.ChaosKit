@@ -351,3 +351,6 @@ MigrationBackup/
 
 # auto generated files
 */00. ReadMe !!!
+
+nupkgs/
+packages/

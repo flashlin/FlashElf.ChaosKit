@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("FlashElf.ChaosKit.Autofac")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Chaos strategy is a software development strategy based on the chaos model. Its main rule is to always solve the most important problems first.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("FlashElf")]
 [assembly: AssemblyProduct("FlashElf.ChaosKit.Autofac")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
