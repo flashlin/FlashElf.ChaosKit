@@ -13,9 +13,11 @@ namespace FlashElf.ChaosKit
 	public class ChaosServiceImpl : ChaosProto.ChaosProtoBase
 	{
 		private readonly IChaosServiceResolver _serviceResolver;
+		private readonly IChaosSerializer _serializer;
 
-		public ChaosServiceImpl(IChaosServiceResolver serviceResolver)
+		public ChaosServiceImpl(IChaosServiceResolver serviceResolver, IChaosSerializer serializer)
 		{
+			_serializer = serializer;
 			_serviceResolver = serviceResolver;
 		}
 
@@ -28,7 +30,7 @@ namespace FlashElf.ChaosKit
 
 			if (realRepoInfo.Methods.TryGetValue(request.MethodName, out var method))
 			{
-				var parameters = (List<ChaosParameter>)BuiltBinarySerializer.Deserialize(typeof(List<ChaosParameter>), request.Parameters.ToByteArray());
+				var parameters = (List<ChaosParameter>)_serializer.Deserialize(typeof(List<ChaosParameter>), request.Parameters.ToByteArray());
 				var args = parameters.Select(x => x.Value).ToArray();
 				var returnValue = method(realRepo, args);
 
@@ -39,7 +41,7 @@ namespace FlashElf.ChaosKit
 
 				var reply = new ChaosReply()
 				{
-					Data = ByteString.CopyFrom(BuiltBinarySerializer.Serialize(invocationReply))
+					Data = ByteString.CopyFrom(_serializer.Serialize(invocationReply))
 				};
 
 				return Task.FromResult(reply);
