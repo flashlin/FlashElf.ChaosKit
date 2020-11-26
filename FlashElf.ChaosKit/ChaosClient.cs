@@ -11,9 +11,11 @@ namespace FlashElf.ChaosKit
 	{
 		private readonly Channel _channel;
 		private readonly ChaosProtoClient _client;
+		private readonly IChaosSerializer _serializer;
 
-		public ChaosClient(string chaosServer)
+		public ChaosClient(string chaosServer, IChaosSerializer serializer)
 		{
+			_serializer = serializer;
 			_channel = new Channel(chaosServer, ChannelCredentials.Insecure);
 			_client = new ChaosProtoClient(_channel);
 		}
@@ -24,13 +26,13 @@ namespace FlashElf.ChaosKit
 			{
 				InterfaceName = invocation.InterfaceName,
 				MethodName = invocation.MethodName,
-				Parameters = ByteString.CopyFrom(BuiltBinarySerializer.Serialize(invocation.Parameters))
+				Parameters = ByteString.CopyFrom(_serializer.Serialize(invocation.Parameters))
 			};
 			
 			var reply = _client.Send(req);
 			var data = reply.Data.ToByteArray();
 
-			var invocationResp = (ChaosRepoInvocationResp)BuiltBinarySerializer.Deserialize(typeof(ChaosRepoInvocationResp), data);
+			var invocationResp = (ChaosRepoInvocationResp)_serializer.Deserialize(typeof(ChaosRepoInvocationResp), data);
 			return invocationResp.Data;
 		}
 

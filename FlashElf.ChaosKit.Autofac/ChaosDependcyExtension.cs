@@ -11,9 +11,11 @@ namespace FlashElf.ChaosKit.Autofac
 	{
 		public static void AddChaosServices(this ContainerBuilder services, string chaosServer)
 		{
+			services.RegisterType<ChaosSerializer>().As<IChaosSerializer>();
 			services.RegisterType<ChaosServiceResolver>().As<IChaosServiceResolver>();
 			services.RegisterType<ChaosServer>().As<IChaosServer>();
-			services.Register<IChaosFactory>(sp => new ChaosFactory(chaosServer));
+			services.Register<IChaosFactory>(sp => 
+				new ChaosFactory(chaosServer, sp.Resolve<IChaosSerializer>()));
 		}
 
 		public static void AddChaosTransient<TServiceType>(this ContainerBuilder services)

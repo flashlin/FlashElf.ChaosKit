@@ -6,9 +6,11 @@ namespace FlashElf.ChaosKit
 	{
 		public static void AddChaosServices(this IServiceCollection services, string chaosServer)
 		{
+			services.AddTransient<IChaosSerializer, ChaosSerializer>();
 			services.AddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddSingleton<IChaosServer, ChaosServer>();
-			services.AddTransient<IChaosFactory>(sp => new ChaosFactory(chaosServer));
+			services.AddTransient<IChaosFactory>(sp => 
+				new ChaosFactory(chaosServer, sp.GetService<IChaosSerializer>()));
 		}
 
 		public static void AddChaosTransient<TServiceType>(this IServiceCollection services)
