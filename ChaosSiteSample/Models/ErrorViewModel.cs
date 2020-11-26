@@ -1,6 +1,4 @@
-using System;
-
-namespace ChaosSite.Models
+namespace ChaosSiteSample.Models
 {
 	public class ErrorViewModel
 	{

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using ChaosSiteSample.Models;
+using ChaosSiteSample.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ChaosSite.Models;
-using ChaosSite.Models.Services;
 
-namespace ChaosSite.Controllers
+namespace ChaosSiteSample.Controllers
 {
 	public class HomeController : Controller
 	{
@@ -23,8 +19,11 @@ namespace ChaosSite.Controllers
 
 		public IActionResult Index()
 		{
-			var data = _myRepo.GetCustomer();
-			return View();
+			var vm = new HomeViewModel()
+			{
+				Customer = _myRepo.GetCustomer()
+			};
+			return View(vm);
 		}
 
 		public IActionResult Privacy()

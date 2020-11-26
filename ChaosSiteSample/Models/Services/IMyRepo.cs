@@ -1,4 +1,4 @@
-namespace ChaosSite.Models.Services
+namespace ChaosSiteSample.Models.Services
 {
 	public interface IMyRepo
 	{

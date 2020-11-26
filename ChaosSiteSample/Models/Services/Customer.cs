@@ -1,6 +1,6 @@
 using System;
 
-namespace ChaosSite.Models.Services
+namespace ChaosSiteSample.Models.Services
 {
 	[Serializable]
 	public class Customer

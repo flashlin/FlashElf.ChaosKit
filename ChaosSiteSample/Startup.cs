@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AspNetCore.Proxy;
-using ChaosSite.Models.Services;
+using ChaosSiteSample.Models.Services;
 using FlashElf.ChaosKit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ChaosSite
+namespace ChaosSiteSample
 {
 	public class Startup
 	{
