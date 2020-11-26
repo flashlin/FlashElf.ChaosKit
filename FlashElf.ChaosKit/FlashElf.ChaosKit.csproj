@@ -2,6 +2,12 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Description>Chaos strategy is a software development strategy based on the chaos model. Its main rule is to always solve the most important problems first.</Description>
+		<Authors>FlashElf</Authors>
+		<RepositoryUrl>https://github.com/flashlin/FlashElf.ChaosKit</RepositoryUrl>
+		<PackageIcon></PackageIcon>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<ItemGroup>
