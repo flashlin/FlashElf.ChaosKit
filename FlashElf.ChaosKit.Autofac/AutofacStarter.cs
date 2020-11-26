@@ -20,6 +20,7 @@ namespace FlashElf.ChaosKit.Autofac
 		}
 
 		public ServiceCollection ServiceCollection => _serviceCollection;
+		public AutofacServiceProvider ServiceProvider => _serviceProvider;
 
 		private void ConfigureContainerBuilder(ContainerBuilder containerBuilder)
 		{
