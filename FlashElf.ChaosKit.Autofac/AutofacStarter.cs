@@ -28,15 +28,10 @@ namespace FlashElf.ChaosKit.Autofac
 			_serviceCollection = new ServiceCollection();
 		}
 
-		public IContainer Build(IContainer container = null)
+		public IContainer Build()
 		{
 			_containerBuilder.Populate(_serviceCollection);
-
-			if (container == null)
-			{
-				container = _containerBuilder.Build();
-			}
-
+			var container = _containerBuilder.Build();
 			_serviceProvider = new AutofacServiceProvider(container);
 			return container;
 		}
