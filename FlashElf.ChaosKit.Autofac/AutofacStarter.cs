@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,6 +46,11 @@ namespace FlashElf.ChaosKit.Autofac
 			where T: class
 		{
 			_serviceCollection.AddChaosTransient<T>();
+		}
+
+		public void AddChaosInterfaces(Assembly assembly)
+		{
+			_serviceCollection.AddChaosInterfaces(assembly);
 		}
 
 		public T Resolve<T>()
