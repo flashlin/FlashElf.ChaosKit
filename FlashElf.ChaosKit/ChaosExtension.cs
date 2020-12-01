@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,15 @@ namespace FlashElf.ChaosKit
 		public static void AddChaosTransient<TServiceType>(this IServiceCollection services)
 			where TServiceType : class
 		{
+			var isExists = services
+				.Where(i => i.ServiceType == typeof(TServiceType))
+				.Any(x => x.ImplementationType.Name == $"{typeof(TServiceType)}Proxy");
+
+			if (isExists)
+			{
+				return;
+			}
+
 			services.AddTransient<TServiceType>(sp =>
 				sp.GetService<IChaosFactory>().Create<TServiceType>());
 		}

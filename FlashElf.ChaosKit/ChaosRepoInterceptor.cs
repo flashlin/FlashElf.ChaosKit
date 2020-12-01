@@ -9,7 +9,8 @@ namespace FlashElf.ChaosKit
 		private readonly Type _repoInterfaceType;
 		private readonly ChaosClient _chaosClient;
 
-		public ChaosRepoInterceptor(string chaosServer, Type repoInterfaceType, IChaosSerializer serializer)
+		public ChaosRepoInterceptor(string chaosServer, Type repoInterfaceType, 
+			IChaosSerializer serializer)
 		{
 			_repoInterfaceType = repoInterfaceType;
 			_chaosClient = new ChaosClient(chaosServer, serializer);
