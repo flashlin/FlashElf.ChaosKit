@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Reflection;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.DependencyInjection;
+using T1.Standard.DynamicCode;
 
 namespace FlashElf.ChaosKit
 {
@@ -18,6 +22,23 @@ namespace FlashElf.ChaosKit
 		{
 			services.AddTransient<TServiceType>(sp =>
 				sp.GetService<IChaosFactory>().Create<TServiceType>());
+		}
+
+		public static void AddChaosInterfaces(this IServiceCollection services, Assembly assembly)
+		{
+			var types = assembly.GetTypes();
+			foreach (var type in types)
+			{
+				if( !type.IsInterface )	continue;
+				var attr = type.GetCustomAttribute<ChaosInterfaceAttribute>();
+				if( attr ==null) continue;
+
+				var addChaosTransient = DynamicMethod.GetGenericMethod(typeof(ChaosExtension),
+					new[] {type}, nameof(AddChaosTransient),
+					new [] { typeof(IServiceCollection) });
+
+				addChaosTransient(null, new object[]{ services });
+			}
 		}
 	}
 }

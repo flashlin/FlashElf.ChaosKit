@@ -24,6 +24,7 @@ namespace ChaosSiteSample
 			services.AddChaosServices("127.0.0.1:50050");
 			services.AddTransient<IMyRepo, MyRepo>();
 			services.AddChaosTransient<IMyRepo>();
+			//services.AddChaosInterfaces(typeof(IMyRepo).Assembly);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
