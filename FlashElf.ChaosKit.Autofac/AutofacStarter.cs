@@ -25,13 +25,13 @@ namespace FlashElf.ChaosKit.Autofac
 		private void ConfigureContainerBuilder(ContainerBuilder containerBuilder)
 		{
 			_containerBuilder = containerBuilder;
-
 			_serviceCollection = new ServiceCollection();
-			_containerBuilder.Populate(_serviceCollection);
 		}
 
 		public IContainer Build(IContainer container = null)
 		{
+			_containerBuilder.Populate(_serviceCollection);
+
 			if (container == null)
 			{
 				container = _containerBuilder.Build();
@@ -39,6 +39,22 @@ namespace FlashElf.ChaosKit.Autofac
 
 			_serviceProvider = new AutofacServiceProvider(container);
 			return container;
+		}
+
+		public void AddChaosServices(string chaosServer)
+		{
+			_serviceCollection.AddChaosServices(chaosServer);
+		}
+
+		public void AddChaosTransient<T>()
+			where T: class
+		{
+			_serviceCollection.AddChaosTransient<T>();
+		}
+
+		public T Resolve<T>()
+		{
+			return _serviceProvider.GetService<T>();
 		}
 	}
 }

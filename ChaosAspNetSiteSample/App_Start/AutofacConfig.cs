@@ -22,14 +22,13 @@ namespace ChaosAspNetSiteSample.App_Start
 			builder.RegisterControllers(Assembly.GetExecutingAssembly());
 			builder.RegisterType<MyRepo>().As<IMyRepo>();
 
-			builder.AddChaosServices("127.0.0.1:50050");
-			builder.AddChaosTransient<IMyRepo>();
+			autofacStarter.AddChaosServices("127.0.0.1:50050");
+			autofacStarter.AddChaosTransient<IMyRepo>();
 
 			var container = autofacStarter.Build();
 
 			DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
-			container.Resolve<IChaosServer>().Start();
+			autofacStarter.Resolve<IChaosServer>().Start();
 		}
 	}
 }

@@ -8,6 +8,8 @@
 		<RepositoryUrl>https://github.com/flashlin/FlashElf.ChaosKit</RepositoryUrl>
 		<PackageIcon></PackageIcon>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<Version>1.0.1</Version>
+		<PackageReleaseNotes>add AddChaosInterfaces</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
