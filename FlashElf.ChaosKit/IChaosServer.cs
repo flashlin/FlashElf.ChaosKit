@@ -4,5 +4,6 @@
 	{
 		void Start();
 		void Shutdown();
+		ChaosServerOptions Options { get; set; }
 	}
 }

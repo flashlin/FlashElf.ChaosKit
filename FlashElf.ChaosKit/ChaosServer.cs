@@ -15,7 +15,7 @@ namespace FlashElf.ChaosKit
 			_chaosServiceResolver = chaosServiceResolver;
 		}
 
-		public int Port { get; set; } = 50050;
+		public ChaosServerOptions Options { get; set; } = new ChaosServerOptions();
 
 		public void Start()
 		{
@@ -27,7 +27,7 @@ namespace FlashElf.ChaosKit
 				},
 				Ports =
 				{
-					new ServerPort("0.0.0.0", Port, ServerCredentials.Insecure)
+					new ServerPort(Options.ListenIp, Options.ListenPort, ServerCredentials.Insecure)
 				}
 			};
 			_server.Start();
