@@ -28,8 +28,8 @@ builder.RegisterControllers(Assembly.GetExecutingAssembly());
 builder.RegisterType<MyRepo>().As<IMyRepo>();
 
 //Please add the following chaos code after the production code
-builder.AddChaosServices("127.0.0.1:50050");
-builder.AddChaosTransient<IMyRepo>();
+autofacStarter.AddChaosServices("127.0.0.1:50050");
+autofacStarter.AddChaosTransient<IMyRepo>();
 
 
 var container = autofacStarter.Build();
