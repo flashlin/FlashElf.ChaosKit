@@ -22,8 +22,7 @@ namespace FlashElf.ChaosKit
 			where TServiceType : class
 		{
 			var isExists = services
-				.Where(i => i.ServiceType == typeof(TServiceType))
-				.Any(x => x.ImplementationType.Name == $"{typeof(TServiceType)}Proxy");
+				.Any(i => i.ServiceType == typeof(TServiceType));
 
 			if (isExists)
 			{
