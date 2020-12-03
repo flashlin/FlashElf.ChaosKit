@@ -11,8 +11,8 @@ namespace FlashElf.ChaosKit
 	{
 		public static void AddChaosServices(this IServiceCollection services, string chaosServer)
 		{
-			services.AddTransient<IChaosSerializer, ChaosSerializer>();
-			services.AddTransient<IChaosServiceResolver, ChaosServiceResolver>();
+			services.TryAddTransient<IChaosSerializer, ChaosSerializer>();
+			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddSingleton<IChaosServer, ChaosServer>();
 			services.AddTransient<IChaosFactory>(sp => 
 				new ChaosFactory(chaosServer, sp.GetService<IChaosSerializer>()));
@@ -21,8 +21,7 @@ namespace FlashElf.ChaosKit
 		public static void AddChaosTransient<TServiceType>(this IServiceCollection services)
 			where TServiceType : class
 		{
-			var isExists = services
-				.Any(i => i.ServiceType == typeof(TServiceType));
+			var isExists = IsRegisted<TServiceType>(services);
 
 			if (isExists)
 			{
@@ -31,6 +30,23 @@ namespace FlashElf.ChaosKit
 
 			services.AddTransient<TServiceType>(sp =>
 				sp.GetService<IChaosFactory>().Create<TServiceType>());
+		}
+
+		public static void TryAddTransient<TServiceType, TImplementType>(this IServiceCollection services)
+			where TServiceType : class
+			where TImplementType : class, TServiceType
+		{
+			if (IsRegisted<TServiceType>(services))
+			{
+				return;
+			}
+			services.AddTransient<TServiceType, TImplementType>();
+		}
+
+		private static bool IsRegisted<TServiceType>(IServiceCollection services) where TServiceType : class
+		{
+			return services
+				.Any(i => i.ServiceType == typeof(TServiceType));
 		}
 
 		public static void AddChaosInterfaces(this IServiceCollection services, Assembly assembly)
