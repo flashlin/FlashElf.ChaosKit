@@ -188,6 +188,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutofacStarter.cs" />
+    <Compile Include="ChaosServiceProvider.cs" />
+    <Compile Include="IChaosServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
