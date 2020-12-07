@@ -11,7 +11,7 @@ namespace FlashElf.ChaosKit
 	{
 		public static void AddChaosServices(this IServiceCollection services, string chaosServer)
 		{
-			services.TryAddTransient<IChaosSerializer, ChaosSerializer>();
+			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddSingleton<IChaosServer, ChaosServer>();
 			services.AddTransient<IChaosFactory>(sp => 

@@ -2,7 +2,7 @@
 
 namespace FlashElf.ChaosKit
 {
-	public class ChaosSerializer : IChaosSerializer
+	public class ChaosBinarySerializer : IChaosSerializer
 	{
 		public byte[] Serialize<T>(T obj)
 		{

@@ -2,7 +2,7 @@
 
 namespace ChaosAspNetSiteSample.Models.Services
 {
-	[Serializable]
+	//[Serializable]
 	public class Customer
 	{
 		public string Name { get; set; }

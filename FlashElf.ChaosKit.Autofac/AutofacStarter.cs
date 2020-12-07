@@ -43,7 +43,7 @@ namespace FlashElf.ChaosKit.Autofac
 		}
 
 		public void AddChaosTransient<T>()
-			where T: class
+			where T : class
 		{
 			_serviceCollection.AddChaosTransient<T>();
 		}
@@ -56,6 +56,13 @@ namespace FlashElf.ChaosKit.Autofac
 		public T Resolve<T>()
 		{
 			return _serviceProvider.GetService<T>();
+		}
+
+		public void AddTransient<TService, TImplement>()
+			where TService : class
+			where TImplement : class, TService
+		{
+			_serviceCollection.AddTransient<TService, TImplement>();
 		}
 	}
 }

@@ -8,9 +8,9 @@
 		<RepositoryUrl>https://github.com/flashlin/FlashElf.ChaosKit</RepositoryUrl>
 		<PackageIcon></PackageIcon>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-		<Version>1.0.4</Version>
-		<PackageReleaseNotes>check register</PackageReleaseNotes>
-		<AssemblyVersion>1.0.4.0</AssemblyVersion>
+		<Version>1.0.5</Version>
+		<PackageReleaseNotes>check registered</PackageReleaseNotes>
+		<AssemblyVersion>1.0.5.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -25,7 +25,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="T1.Standard" Version="1.0.45" />
+		<PackageReference Include="T1.Standard" Version="1.0.46" />
 	</ItemGroup>
 
 	<ItemGroup>
