@@ -8,9 +8,9 @@
 		<RepositoryUrl>https://github.com/flashlin/FlashElf.ChaosKit</RepositoryUrl>
 		<PackageIcon></PackageIcon>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-		<Version>1.0.5</Version>
-		<PackageReleaseNotes>check registered</PackageReleaseNotes>
-		<AssemblyVersion>1.0.5.0</AssemblyVersion>
+		<Version>1.0.6</Version>
+		<PackageReleaseNotes>add JsonSerializer</PackageReleaseNotes>
+		<AssemblyVersion>1.0.6.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
