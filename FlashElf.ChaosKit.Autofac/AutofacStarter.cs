@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,6 +63,12 @@ namespace FlashElf.ChaosKit.Autofac
 			where TImplement : class, TService
 		{
 			_serviceCollection.AddTransient<TService, TImplement>();
+		}
+
+		public void AddTransient<TService>(Func<IServiceProvider, TService> resolve)
+			where TService : class
+		{
+			_serviceCollection.AddTransient<TService>(resolve);
 		}
 	}
 }

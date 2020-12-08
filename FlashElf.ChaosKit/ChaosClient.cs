@@ -25,19 +25,23 @@ namespace FlashElf.ChaosKit
 			_typeFinder = new TypeFinder();
 		}
 
-		public object Send(ChaosRepoInvocation invocation)
+		public object Send(ChaosInvocation invocation)
 		{
 			var req = new ChaosRequest()
 			{
-				InterfaceName = invocation.InterfaceName,
-				MethodName = invocation.MethodName,
-				Parameters = ByteString.CopyFrom(_serializer.Serialize(invocation.Parameters))
+				Invocation = ByteString.CopyFrom(_binarySerializer.Serialize(invocation))
 			};
-			
+
 			var reply = _client.Send(req);
 			var data = reply.Data.ToByteArray();
 
 			var invocationResp = (ChaosInvocationResp)_binarySerializer.Deserialize(typeof(ChaosInvocationResp), data);
+
+			if (invocationResp.DataTypeFullName == null)
+			{
+				return null;
+			}
+
 			var dataType = _typeFinder.Find(invocationResp.DataTypeFullName);
 			return _serializer.Deserialize(dataType, invocationResp.Data);
 		}

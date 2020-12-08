@@ -7,11 +7,9 @@ service ChaosProto {
 }
 
 message ChaosRequest {
-  string InterfaceName = 1;
-  string MethodName = 2;
-  bytes Parameters = 3;
+  bytes Invocation = 1;
 }
 
 message ChaosReply {
-  bytes Data=1;
+  bytes Data = 1;
 }
