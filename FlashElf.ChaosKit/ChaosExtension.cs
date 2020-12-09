@@ -4,6 +4,7 @@ using System.Reflection;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
 using T1.Standard.DynamicCode;
+using Type = Google.Protobuf.WellKnownTypes.Type;
 
 namespace FlashElf.ChaosKit
 {
@@ -29,7 +30,7 @@ namespace FlashElf.ChaosKit
 			}
 
 			services.AddTransient<TServiceType>(sp =>
-				sp.GetService<IChaosFactory>().Create<TServiceType>());
+				sp.GetService<IChaosFactory>().CreateChaosService<TServiceType>());
 		}
 
 		public static void TryAddTransient<TServiceType, TImplementType>(this IServiceCollection services)
@@ -51,18 +52,32 @@ namespace FlashElf.ChaosKit
 
 		public static void AddChaosInterfaces(this IServiceCollection services, Assembly assembly)
 		{
+			AddChaosInterfaces(services, assembly, type =>
+			{
+				var attr = type.GetCustomAttribute<ChaosInterfaceAttribute>();
+				return attr != null;
+			});
+		}
+
+		public static void AddChaosInterfaces(this IServiceCollection services, 
+			Assembly assembly, 
+			Func<System.Type, bool> predicate)
+		{
 			var types = assembly.GetTypes();
 			foreach (var type in types)
 			{
-				if( !type.IsInterface )	continue;
-				var attr = type.GetCustomAttribute<ChaosInterfaceAttribute>();
-				if( attr ==null) continue;
+				if (!type.IsInterface) continue;
+
+				if (!predicate(type))
+				{
+					continue;
+				}
 
 				var addChaosTransient = DynamicMethod.GetGenericMethod(typeof(ChaosExtension),
-					new[] {type}, nameof(AddChaosTransient),
-					new [] { typeof(IServiceCollection) });
+					new[] { type }, nameof(AddChaosTransient),
+					new[] { typeof(IServiceCollection) });
 
-				addChaosTransient(null, new object[]{ services });
+				addChaosTransient(null, new object[] { services });
 			}
 		}
 	}

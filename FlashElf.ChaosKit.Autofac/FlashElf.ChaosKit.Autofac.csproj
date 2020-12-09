@@ -266,8 +266,8 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="T1.Standard, Version=1.0.49.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\T1.Standard.1.0.49\lib\netstandard2.0\T1.Standard.dll</HintPath>
+    <Reference Include="T1.Standard, Version=1.0.50.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\T1.Standard.1.0.50\lib\netstandard2.0\T1.Standard.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>

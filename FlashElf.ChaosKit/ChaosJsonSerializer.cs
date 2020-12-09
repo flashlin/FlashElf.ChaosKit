@@ -19,7 +19,17 @@ namespace FlashElf.ChaosKit
 
 		public byte[] Serialize<T>(T obj)
 		{
-			var json = typeof(string) == typeof(T) ? $"{obj}" : JsonSerializer.Serialize(obj);
+			var objType = typeof(T);
+			if (typeof(object) == typeof(T))
+			{
+				var objValue = (object) obj;
+				if (objValue == null)
+				{
+					return new byte[0];
+				}
+				objType = obj.GetType();
+			}
+			var json = objType == typeof(string) ? $"{obj}" : JsonSerializer.Serialize(obj);
 			return Encoding.UTF8.GetBytes(json);
 		}
 
@@ -28,6 +38,10 @@ namespace FlashElf.ChaosKit
 			var json = Encoding.UTF8.GetString(data);
 			if (typeof(string) == type)
 			{
+				if (data.Length == 0)
+				{
+					return String.Empty;
+				}
 				return json;
 			}
 			return JsonSerializer.Deserialize(json, type);

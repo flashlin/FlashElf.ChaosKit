@@ -24,6 +24,7 @@ namespace ChaosAspNetSiteSample.App_Start
 
 			autofacStarter.AddTransient<IChaosSerializer, ChaosJsonSerializer>();
 			autofacStarter.AddChaosServices("127.0.0.1:50050");
+			//autofacStarter.AddChaosInterfaces(typeof(AutofacConfig).Assembly);
 			autofacStarter.AddChaosTransient<IMyRepo>();
 
 			var container = autofacStarter.Build();

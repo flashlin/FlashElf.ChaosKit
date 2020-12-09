@@ -1,5 +1,8 @@
-﻿namespace ChaosAspNetSiteSample.Models.Services
+﻿using FlashElf.ChaosKit;
+
+namespace ChaosAspNetSiteSample.Models.Services
 {
+	[ChaosInterface]
 	public interface IMyRepo
 	{
 		Customer GetCustomer();

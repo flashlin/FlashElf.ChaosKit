@@ -14,12 +14,12 @@ namespace FlashElf.ChaosKit
 		private readonly ChaosProtoClient _client;
 		private readonly IChaosSerializer _serializer;
 		private readonly TypeFinder _typeFinder;
-		private readonly ChaosBinarySerializer _binarySerializer;
+		private readonly IChaosFactory _chaosFactory;
 
-		public ChaosClient(string chaosServer, IChaosSerializer serializer)
+		public ChaosClient(string chaosServer, IChaosSerializer serializer, IChaosFactory chaosFactory)
 		{
+			_chaosFactory = chaosFactory;
 			_serializer = serializer;
-			_binarySerializer = new ChaosBinarySerializer();
 			_channel = new Channel(chaosServer, ChannelCredentials.Insecure);
 			_client = new ChaosProtoClient(_channel);
 			_typeFinder = new TypeFinder();
@@ -27,15 +27,11 @@ namespace FlashElf.ChaosKit
 
 		public object Send(ChaosInvocation invocation)
 		{
-			var req = new ChaosRequest()
-			{
-				Invocation = ByteString.CopyFrom(_binarySerializer.Serialize(invocation))
-			};
+			var req = _chaosFactory.CreateChaosRequest(invocation);
 
 			var reply = _client.Send(req);
-			var data = reply.Data.ToByteArray();
 
-			var invocationResp = (ChaosInvocationResp)_binarySerializer.Deserialize(typeof(ChaosInvocationResp), data);
+			var invocationResp = _chaosFactory.GetInvocationResp(reply);
 
 			if (invocationResp.DataTypeFullName == null)
 			{

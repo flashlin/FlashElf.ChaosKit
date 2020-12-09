@@ -8,9 +8,12 @@ namespace FlashElf.ChaosKit
 		private Server _server;
 		private readonly IChaosServiceResolver _chaosServiceResolver;
 		private readonly IChaosSerializer _serializer;
+		private IChaosFactory _chaosFactory;
 
-		public ChaosServer(IChaosServiceResolver chaosServiceResolver, IChaosSerializer serializer)
+		public ChaosServer(IChaosServiceResolver chaosServiceResolver, IChaosSerializer serializer,
+			IChaosFactory chaosFactory)
 		{
+			_chaosFactory = chaosFactory;
 			_serializer = serializer;
 			_chaosServiceResolver = chaosServiceResolver;
 		}
@@ -23,7 +26,7 @@ namespace FlashElf.ChaosKit
 			{
 				Services =
 				{
-					ChaosProto.BindService(new ChaosServiceImpl(_chaosServiceResolver, _serializer))
+					ChaosProto.BindService(new ChaosServiceImpl(_chaosServiceResolver, _serializer, _chaosFactory))
 				},
 				Ports =
 				{
