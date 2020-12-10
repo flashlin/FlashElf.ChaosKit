@@ -63,50 +63,14 @@ namespace FlashElf.ChaosKit
 		{
 			foreach (var method in clazz.AllMethods)
 			{
-				if (method.MethodInfo.Name != request.MethodName)
-				{
-					continue;
-				}
-
-				var parameterInfos = method.MethodInfo.GetParameters();
-				if (parameterInfos.Length != request.Parameters.Count)
-				{
-					continue;
-				}
-
-				var isAllSame = parameterInfos.Zip(request.Parameters.Select(x => _typeFinder.Find(x.ParameterType)),
-						(x, y) => x.ParameterType == y)
-					.All(x => x == true);
-
-				if (!isAllSame)
-				{
-					continue;
-				}
+				if (!IsMatchMethod(method.MethodInfo, request)) continue;
 
 				return (method.MethodInfo, method.Func);
 			}
 
 			foreach (var method in clazz.AllGenericMethods)
 			{
-				if (method.MethodInfo.Name != request.MethodName)
-				{
-					continue;
-				}
-
-				var parameterInfos = method.MethodInfo.GetParameters();
-				if (parameterInfos.Length != request.Parameters.Count)
-				{
-					continue;
-				}
-
-				var isAllSame = parameterInfos.Zip(request.Parameters.Select(x => _typeFinder.Find(x.ParameterType)),
-						(x, y) => x.ParameterType == y)
-					.All(x => x == true);
-
-				if (!isAllSame)
-				{
-					continue;
-				}
+				if (!IsMatchMethod(method.MethodInfo, request)) continue;
 
 				var genericTypes= request.GenericTypes
 					.Select(x => _typeFinder.Find(x.ParameterType))
@@ -116,6 +80,26 @@ namespace FlashElf.ChaosKit
 			}
 
 			throw new EntryPointNotFoundException(request.MethodName);
+		}
+
+		private bool IsMatchMethod(MethodInfo methodInfo, ChaosInvocation request)
+		{
+			if (methodInfo.Name != request.MethodName)
+			{
+				return false;
+			}
+
+			var parameterInfos = methodInfo.GetParameters();
+			if (parameterInfos.Length != request.Parameters.Count)
+			{
+				return false;
+			}
+
+			var isAllSame = parameterInfos.Zip(request.Parameters.Select(x => _typeFinder.Find(x.ParameterType)),
+					(x, y) => x.ParameterType == y)
+				.All(x => x == true);
+
+			return isAllSame;
 		}
 	}
 }
