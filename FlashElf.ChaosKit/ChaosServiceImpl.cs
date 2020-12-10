@@ -25,7 +25,7 @@ namespace FlashElf.ChaosKit
 			_typeFinder = new TypeFinder();
 		}
 
-		public override Task<AnyProto> Send(
+		public override Task<AnyProto> SendInvocation(
 			AnyProto request,
 			ServerCallContext context)
 		{

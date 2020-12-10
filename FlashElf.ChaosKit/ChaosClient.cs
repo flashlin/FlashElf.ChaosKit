@@ -27,7 +27,7 @@ namespace FlashElf.ChaosKit
 		{
 			var req = invocation.ToAnyProto();
 
-			var reply = _client.Send(req);
+			var reply = _client.SendInvocation(req);
 
 			var invocationResp = reply.ConvertTo<ChaosInvocationResp>();
 

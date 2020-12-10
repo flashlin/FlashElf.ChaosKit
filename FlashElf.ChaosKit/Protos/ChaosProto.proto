@@ -3,7 +3,7 @@
 option csharp_namespace = "FlashElf.ChaosKit.Protos";
 
 service ChaosProto {
-  rpc Send (AnyProto) returns (AnyProto);
+  rpc SendInvocation (AnyProto) returns (AnyProto);
 }
 
 message AnyProto {
