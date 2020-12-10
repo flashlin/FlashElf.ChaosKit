@@ -6,8 +6,8 @@ namespace FlashElf.ChaosKit
 {
 	public interface IChaosFactory
 	{
-		TRepoInterface CreateChaosService<TRepoInterface>()
-			where TRepoInterface : class;
+		TService CreateChaosService<TService>()
+			where TService : class;
 
 		ChaosInvocation CreateChaosInvocation(Type implementType, 
 			MethodInfo invocationMethod,

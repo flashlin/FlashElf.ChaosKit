@@ -15,8 +15,11 @@ namespace FlashElf.ChaosKit
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddSingleton<IChaosServer, ChaosServer>();
-			services.AddTransient<IChaosFactory>(sp => 
-				new ChaosFactory(chaosServer, sp.GetService<IChaosSerializer>()));
+			services.AddTransient<IChaosFactory>(sp =>
+			{
+				var chaosFactory = new ChaosFactory(chaosServer, sp.GetService<IChaosSerializer>());
+				return new CachedChaosFactory(chaosFactory);
+			});
 		}
 
 		public static void AddChaosTransient<TServiceType>(this IServiceCollection services)
