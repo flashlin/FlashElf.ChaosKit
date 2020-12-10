@@ -17,7 +17,7 @@ namespace FlashElf.ChaosKit
 		{
 			_chaosFactory = chaosFactory;
 			_implementType = implementType;
-			_chaosClient = new ChaosClient(chaosServer, serializer, chaosFactory);
+			_chaosClient = new ChaosClient(chaosServer, serializer);
 		}
 
 		public void Intercept(IInvocation invocation)

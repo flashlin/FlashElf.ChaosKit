@@ -26,7 +26,7 @@ namespace FlashElf.ChaosKit
 			{
 				Services =
 				{
-					ChaosProto.BindService(new ChaosServiceImpl(_chaosServiceResolver, _serializer, _chaosFactory))
+					ChaosProto.BindService(new ChaosServiceImpl(_chaosServiceResolver, _serializer))
 				},
 				Ports =
 				{

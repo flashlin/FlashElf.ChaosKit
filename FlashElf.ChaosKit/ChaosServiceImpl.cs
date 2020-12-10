@@ -15,27 +15,22 @@ namespace FlashElf.ChaosKit
 	{
 		private readonly IChaosServiceResolver _serviceResolver;
 		private readonly IChaosSerializer _serializer;
-		private readonly ChaosBinarySerializer _binarySerializer;
 		private readonly TypeFinder _typeFinder;
-		private readonly IChaosFactory _chaosFactory;
 
 		public ChaosServiceImpl(IChaosServiceResolver serviceResolver, 
-			IChaosSerializer serializer,
-			IChaosFactory chaosFactory)
+			IChaosSerializer serializer)
 		{
-			_chaosFactory = chaosFactory;
 			_serializer = serializer;
 			_serviceResolver = serviceResolver;
-			_binarySerializer = new ChaosBinarySerializer();
 			_typeFinder = new TypeFinder();
 		}
 
-		public override Task<ChaosReply> Send(
-			ChaosRequest request,
+		public override Task<AnyProto> Send(
+			AnyProto request,
 			ServerCallContext context)
 		{
-			var chaosInvocation = _chaosFactory.GetChaosInvocationFrom(request);
-			var realImplementObject = _serviceResolver.GetService(chaosInvocation.InterfaceName);
+			var chaosInvocation = request.ConvertTo<ChaosInvocation>();
+			var realImplementObject = _serviceResolver.GetService(chaosInvocation.InterfaceTypeFullName);
 			var realImplementType = realImplementObject.GetType();
 			var realImplementInfo = ReflectionClass.Reflection(realImplementType);
 
@@ -48,8 +43,19 @@ namespace FlashElf.ChaosKit
 
 			var returnValue = mi.Func(realImplementObject, args);
 
-			var reply = _chaosFactory.CreateChaosReply(chaosInvocation.ReturnTypeFullName, returnValue);
+			var reply = CreateChaosReply(chaosInvocation.ReturnTypeFullName, returnValue);
 			return Task.FromResult(reply);
+		}
+
+		private AnyProto CreateChaosReply(string returnTypeFullName, object returnValue)
+		{
+			var invocationReply = new ChaosInvocationResp()
+			{
+				DataTypeFullName = returnTypeFullName,
+				Data = _serializer.Serialize(returnValue)
+			};
+
+			return invocationReply.ToAnyProto();
 		}
 
 		private (MethodInfo MethodInfo, Func<object, object[], object> Func) FindMethod(ReflectionClass clazz,

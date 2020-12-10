@@ -14,11 +14,9 @@ namespace FlashElf.ChaosKit
 		private readonly ChaosProtoClient _client;
 		private readonly IChaosSerializer _serializer;
 		private readonly TypeFinder _typeFinder;
-		private readonly IChaosFactory _chaosFactory;
 
-		public ChaosClient(string chaosServer, IChaosSerializer serializer, IChaosFactory chaosFactory)
+		public ChaosClient(string chaosServer, IChaosSerializer serializer)
 		{
-			_chaosFactory = chaosFactory;
 			_serializer = serializer;
 			_channel = new Channel(chaosServer, ChannelCredentials.Insecure);
 			_client = new ChaosProtoClient(_channel);
@@ -27,11 +25,11 @@ namespace FlashElf.ChaosKit
 
 		public object Send(ChaosInvocation invocation)
 		{
-			var req = _chaosFactory.CreateChaosRequest(invocation);
+			var req = invocation.ToAnyProto();
 
 			var reply = _client.Send(req);
 
-			var invocationResp = _chaosFactory.GetInvocationResp(reply);
+			var invocationResp = reply.ConvertTo<ChaosInvocationResp>();
 
 			if (invocationResp.DataTypeFullName == null)
 			{
