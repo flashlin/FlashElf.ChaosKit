@@ -34,7 +34,7 @@ autofacStarter.AddChaosTransient<IMyRepo>();
 
 var container = autofacStarter.Build();
 
-//Start Chaos-Server
+//Start Chaos-Server in Staging-Environment
 container.Resolve<IChaosServer>().Start();
 ```
 
@@ -60,7 +60,44 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IChaosSe
 		app.UseDeveloperExceptionPage();
 	}
 
-    //Start Chaos-Server
+    //Start Chaos-Server in Staging-Environment
     chaosServer.Start();
 }
+```
+
+## Chaos Mechanism Behind
+
+Generally, Application have Interface and Implement-Service, Caller access the database through the Interface.
+
+```C#
+services.AddTransient<IMyRepo, MyRepo>();
+```
+
+![](./Document/Architecture1.png)
+
+The following code register chaos-service that
+implement Interface (IMyRepo) in local-environment.
+
+```C#
+services.AddChaosTransient<IMyRepo>();
+```
+
+The following code will start chaos-server in staging-environment.
+
+```C#
+chaosServer.Start();
+```
+
+In the local environment, the Caller used MyRepo originally.
+
+After the above code, the caller will invoke chao-service that communicate with chaos-server in staging environment.
+
+![](./Document/Architecture2.png)
+
+The chaos-server will invoke implement-service(MyRepo) to access staging data and return to chaos-service.
+
+## Advanced use
+
+```C#
+services.AddChaosInterfaces();
 ```
