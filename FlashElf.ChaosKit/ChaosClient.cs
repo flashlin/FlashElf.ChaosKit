@@ -2,23 +2,24 @@
 using FlashElf.ChaosKit.Protos;
 using Google.Protobuf;
 using Grpc.Core;
+using Microsoft.Extensions.Options;
 using T1.Standard.Common;
 using T1.Standard.Serialization;
 
 namespace FlashElf.ChaosKit
 {
 	using ChaosProtoClient = ChaosProto.ChaosProtoClient;
-	public class ChaosClient : IDisposable
+	public class ChaosClient : IDisposable, IChaosClient
 	{
 		private readonly Channel _channel;
 		private readonly ChaosProtoClient _client;
 		private readonly IChaosSerializer _serializer;
 		private readonly TypeFinder _typeFinder;
 
-		public ChaosClient(string chaosServer, IChaosSerializer serializer)
+		public ChaosClient(IOptions<ChaosClientConfig> config, IChaosSerializer serializer)
 		{
 			_serializer = serializer;
-			_channel = new Channel(chaosServer, ChannelCredentials.Insecure);
+			_channel = new Channel(config.Value.ChaosServer, ChannelCredentials.Insecure);
 			_client = new ChaosProtoClient(_channel);
 			_typeFinder = new TypeFinder();
 		}

@@ -9,15 +9,14 @@ namespace FlashElf.ChaosKit
 	public class ChaosInterceptor : IInterceptor
 	{
 		private readonly Type _implementType;
-		private readonly ChaosClient _chaosClient;
+		private readonly IChaosClient _chaosClient;
 		private readonly IChaosFactory _chaosFactory;
 
-		public ChaosInterceptor(string chaosServer, Type implementType, 
-			IChaosSerializer serializer, IChaosFactory chaosFactory)
+		public ChaosInterceptor(Type implementType, IChaosFactory chaosFactory, IChaosClient chaosClient)
 		{
 			_chaosFactory = chaosFactory;
 			_implementType = implementType;
-			_chaosClient = new ChaosClient(chaosServer, serializer);
+			_chaosClient = chaosClient;
 		}
 
 		public void Intercept(IInvocation invocation)

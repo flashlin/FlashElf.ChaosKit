@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using T1.Standard.DynamicCode;
 using Type = Google.Protobuf.WellKnownTypes.Type;
 
@@ -12,14 +13,28 @@ namespace FlashElf.ChaosKit
 	{
 		public static void AddChaosServices(this IServiceCollection services, string chaosServer)
 		{
+			services.TryAddIOptionsTransient(sp => new ChaosClientConfig()
+			{
+				ChaosServer = chaosServer
+			});
+			services.TryAddTransient<IChaosClient, ChaosClient>();
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddSingleton<IChaosServer, ChaosServer>();
 			services.AddTransient<IChaosFactory>(sp =>
 			{
-				var chaosFactory = new ChaosFactory(chaosServer, sp.GetService<IChaosSerializer>());
+				var chaosFactory = new ChaosFactory(sp.GetService<IChaosSerializer>(), 
+					sp.GetService<IChaosClient>());
 				return new CachedChaosFactory(chaosFactory);
 			});
+		}
+
+		private static void TryAddIOptionsTransient<TOptions>(this IServiceCollection services,
+			Func<IServiceProvider, TOptions> create)
+			where TOptions : class, new()
+		{
+			services.TryAddTransient<IOptions<TOptions>>(sp => 
+				Options.Create(create(sp)));
 		}
 
 		public static void AddChaosTransient<TServiceType>(this IServiceCollection services)
@@ -45,6 +60,17 @@ namespace FlashElf.ChaosKit
 				return;
 			}
 			services.AddTransient<TServiceType, TImplementType>();
+		}
+
+		public static void TryAddTransient<TServiceType>(this IServiceCollection services,
+			Func<IServiceProvider, TServiceType> create)
+			where TServiceType : class
+		{
+			if (IsRegisted<TServiceType>(services))
+			{
+				return;
+			}
+			services.AddTransient<TServiceType>(create);
 		}
 
 		private static bool IsRegisted<TServiceType>(IServiceCollection services) where TServiceType : class

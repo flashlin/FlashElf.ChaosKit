@@ -26,6 +26,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="T1.Standard" Version="1.0.50" />
+		<PackageReference Include="WatsonWebsocket" Version="2.2.0.10" />
 	</ItemGroup>
 
 	<ItemGroup>

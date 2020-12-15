@@ -9,23 +9,20 @@ namespace FlashElf.ChaosKit
 {
 	public class ChaosFactory : IChaosFactory
 	{
-		private readonly string _chaosServer;
 		private readonly IChaosSerializer _serializer;
+		private readonly IChaosClient _chaosClient;
 
-		public ChaosFactory(string chaosServer, IChaosSerializer serializer)
+		public ChaosFactory(IChaosSerializer serializer, IChaosClient chaosClient)
 		{
+			_chaosClient = chaosClient;
 			_serializer = serializer;
-			_chaosServer = chaosServer;
 		}
 
 		public TService CreateChaosService<TService>()
 			where TService : class
 		{
-			var chaosInterceptor = new ChaosInterceptor(
-				_chaosServer,
-				typeof(TService),
-				_serializer,
-				this);
+			var chaosInterceptor = new ChaosInterceptor(typeof(TService),
+				this, _chaosClient);
 			return T1.Standard.CastleEx.Interceptor.InterceptInterface<TService>(chaosInterceptor);
 		}
 
