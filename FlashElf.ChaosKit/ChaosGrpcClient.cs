@@ -9,13 +9,13 @@ using T1.Standard.Serialization;
 namespace FlashElf.ChaosKit
 {
 	using ChaosProtoClient = ChaosProto.ChaosProtoClient;
-	public class ChaosClient : IDisposable, IChaosClient
+	public class ChaosGrpcClient : IDisposable, IChaosClient
 	{
 		private readonly Channel _channel;
 		private readonly ChaosProtoClient _client;
 		private readonly IChaosConverter _chaosConverter;
 
-		public ChaosClient(IOptions<ChaosClientConfig> config,
+		public ChaosGrpcClient(IOptions<ChaosClientConfig> config,
 			IChaosConverter chaosConverter)
 		{
 			_chaosConverter = chaosConverter;
@@ -55,7 +55,7 @@ namespace FlashElf.ChaosKit
 			GC.SuppressFinalize(this);
 		}
 
-		~ChaosClient()
+		~ChaosGrpcClient()
 		{
 			ReleaseUnmanagedResources();
 		}

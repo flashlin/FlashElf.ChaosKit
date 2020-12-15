@@ -17,7 +17,7 @@ namespace FlashElf.ChaosKit
 			{
 				ChaosServerIp = chaosServer
 			});
-			services.TryAddTransient<IChaosClient, ChaosClient>();
+			services.TryAddTransient<IChaosClient, ChaosGrpcClient>();
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddTransient<IChaosConverter, ChaosConverter>();

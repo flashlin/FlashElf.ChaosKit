@@ -5,7 +5,7 @@ namespace FlashElf.ChaosKit
 	public class ChaosWebSocketServer : IChaosServer
 	{
 		private WatsonWsServer _server;
-		private ChaosBinarySerializer _binarySerializer;
+		private readonly ChaosBinarySerializer _binarySerializer;
 
 		public ChaosWebSocketServer()
 		{
