@@ -13,19 +13,14 @@ namespace FlashElf.ChaosKit
 	{
 		private readonly Channel _channel;
 		private readonly ChaosProtoClient _client;
-		private readonly IChaosSerializer _serializer;
-		private readonly TypeFinder _typeFinder;
 		private readonly IChaosConverter _chaosConverter;
 
-		public ChaosClient(IOptions<ChaosClientConfig> config, 
-			IChaosSerializer serializer,
+		public ChaosClient(IOptions<ChaosClientConfig> config,
 			IChaosConverter chaosConverter)
 		{
 			_chaosConverter = chaosConverter;
-			_serializer = serializer;
 			_channel = new Channel(config.Value.ChaosServerIp, ChannelCredentials.Insecure);
 			_client = new ChaosProtoClient(_channel);
-			_typeFinder = new TypeFinder();
 		}
 
 		public object Send(ChaosInvocation invocation)
