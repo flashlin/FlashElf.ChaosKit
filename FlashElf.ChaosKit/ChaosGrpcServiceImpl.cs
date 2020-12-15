@@ -6,11 +6,11 @@ using T1.Standard.Serialization;
 
 namespace FlashElf.ChaosKit
 {
-	public class ChaosServiceImpl : ChaosProto.ChaosProtoBase
+	public class ChaosGrpcServiceImpl : ChaosProto.ChaosProtoBase
 	{
 		private readonly ChaosService _chaosService;
 
-		public ChaosServiceImpl(IChaosServiceResolver serviceResolver, 
+		public ChaosGrpcServiceImpl(IChaosServiceResolver serviceResolver, 
 			IChaosSerializer serializer)
 		{
 			_chaosService = new ChaosService(serializer, serviceResolver);
