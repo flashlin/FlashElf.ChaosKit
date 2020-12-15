@@ -3,13 +3,13 @@ using Grpc.Core;
 
 namespace FlashElf.ChaosKit
 {
-	public class ChaosServer : IChaosServer
+	public class ChaosGrpcServer : IChaosServer
 	{
 		private Server _server;
 		private readonly IChaosServiceResolver _chaosServiceResolver;
 		private readonly IChaosSerializer _serializer;
 
-		public ChaosServer(IChaosServiceResolver chaosServiceResolver, IChaosSerializer serializer)
+		public ChaosGrpcServer(IChaosServiceResolver chaosServiceResolver, IChaosSerializer serializer)
 		{
 			_serializer = serializer;
 			_chaosServiceResolver = chaosServiceResolver;
