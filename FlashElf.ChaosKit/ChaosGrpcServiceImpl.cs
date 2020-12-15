@@ -8,12 +8,12 @@ namespace FlashElf.ChaosKit
 {
 	public class ChaosGrpcServiceImpl : ChaosProto.ChaosProtoBase
 	{
-		private readonly ChaosService _chaosService;
+		private readonly IChaosService _chaosService;
 
 		public ChaosGrpcServiceImpl(IChaosServiceResolver serviceResolver, 
-			IChaosSerializer serializer)
+			IChaosSerializer serializer, IChaosService chaosService)
 		{
-			_chaosService = new ChaosService(serializer, serviceResolver);
+			_chaosService = chaosService;
 		}
 
 		public override Task<AnyProto> SendInvocation(
