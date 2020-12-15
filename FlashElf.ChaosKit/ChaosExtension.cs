@@ -15,11 +15,12 @@ namespace FlashElf.ChaosKit
 		{
 			services.TryAddIOptionsTransient(sp => new ChaosClientConfig()
 			{
-				ChaosServer = chaosServer
+				ChaosServerIp = chaosServer
 			});
 			services.TryAddTransient<IChaosClient, ChaosClient>();
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
+			services.AddTransient<IChaosConverter, ChaosConverter>();
 			services.AddSingleton<IChaosServer, ChaosServer>();
 			services.AddTransient<IChaosFactory>(sp =>
 			{

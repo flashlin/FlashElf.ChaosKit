@@ -2,6 +2,7 @@
 {
 	public class ChaosClientConfig
 	{
-		public string ChaosServer { get; set; } = "127.0.0.1:50050";
+		public string ChaosServerIp { get; set; } = "127.0.0.1";
+		public int ChaosServerPort { get; set; } = 50050;
 	}
 }

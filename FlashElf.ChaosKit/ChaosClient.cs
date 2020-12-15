@@ -15,11 +15,15 @@ namespace FlashElf.ChaosKit
 		private readonly ChaosProtoClient _client;
 		private readonly IChaosSerializer _serializer;
 		private readonly TypeFinder _typeFinder;
+		private readonly IChaosConverter _chaosConverter;
 
-		public ChaosClient(IOptions<ChaosClientConfig> config, IChaosSerializer serializer)
+		public ChaosClient(IOptions<ChaosClientConfig> config, 
+			IChaosSerializer serializer,
+			IChaosConverter chaosConverter)
 		{
+			_chaosConverter = chaosConverter;
 			_serializer = serializer;
-			_channel = new Channel(config.Value.ChaosServer, ChannelCredentials.Insecure);
+			_channel = new Channel(config.Value.ChaosServerIp, ChannelCredentials.Insecure);
 			_client = new ChaosProtoClient(_channel);
 			_typeFinder = new TypeFinder();
 		}
@@ -37,8 +41,7 @@ namespace FlashElf.ChaosKit
 				return null;
 			}
 
-			var dataType = _typeFinder.Find(invocationResp.DataTypeFullName);
-			return _serializer.Deserialize(dataType, invocationResp.Data);
+			return _chaosConverter.ToData(invocationResp);
 		}
 
 		public void Close()
