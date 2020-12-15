@@ -5,6 +5,13 @@ namespace FlashElf.ChaosKit
 	public class ChaosWebSocketServer : IChaosServer
 	{
 		private WatsonWsServer _server;
+		private ChaosBinarySerializer _binarySerializer;
+
+		public ChaosWebSocketServer()
+		{
+			_binarySerializer = new ChaosBinarySerializer();
+		}
+
 		public ChaosServerOptions Options { get; set; } = new ChaosServerOptions();
 
 		public void Start()
@@ -31,8 +38,10 @@ namespace FlashElf.ChaosKit
 			//Console.WriteLine("Client disconnected: " + args.IpPort);
 		}
 
-		static void MessageReceived(object sender, MessageReceivedEventArgs args)
+		void MessageReceived(object sender, MessageReceivedEventArgs args)
 		{
+			var req = (ChaosInvocation) _binarySerializer.Deserialize(typeof(ChaosInvocation), args.Data);
+
 			//Console.WriteLine("Message received from " + args.IpPort + ": " + Encoding.UTF8.GetString(args.Data));
 		}
 	}

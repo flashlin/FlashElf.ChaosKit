@@ -30,6 +30,12 @@ namespace FlashElf.ChaosKit
 			ServerCallContext context)
 		{
 			var chaosInvocation = request.ConvertTo<ChaosInvocation>();
+			var reply = ProcessChaosInvocation(chaosInvocation);
+			return Task.FromResult(reply);
+		}
+
+		private AnyProto ProcessChaosInvocation(ChaosInvocation chaosInvocation)
+		{
 			var realImplementObject = _serviceResolver.GetService(chaosInvocation.InterfaceTypeFullName);
 			var realImplementType = realImplementObject.GetType();
 			var realImplementInfo = ReflectionClass.Reflection(realImplementType);
@@ -44,7 +50,7 @@ namespace FlashElf.ChaosKit
 			var returnValue = mi.Func(realImplementObject, args);
 
 			var reply = CreateChaosReply(chaosInvocation.ReturnTypeFullName, returnValue);
-			return Task.FromResult(reply);
+			return reply;
 		}
 
 		private AnyProto CreateChaosReply(string returnTypeFullName, object returnValue)
