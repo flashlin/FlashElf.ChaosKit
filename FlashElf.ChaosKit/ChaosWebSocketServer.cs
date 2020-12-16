@@ -6,9 +6,11 @@ namespace FlashElf.ChaosKit
 	{
 		private WatsonWsServer _server;
 		private readonly ChaosBinarySerializer _binarySerializer;
+		private readonly IChaosService _chaosService;
 
-		public ChaosWebSocketServer()
+		public ChaosWebSocketServer(IChaosService chaosService)
 		{
+			_chaosService = chaosService;
 			_binarySerializer = new ChaosBinarySerializer();
 		}
 
@@ -42,7 +44,11 @@ namespace FlashElf.ChaosKit
 		{
 			var req = (ChaosInvocation) _binarySerializer.Deserialize(typeof(ChaosInvocation), args.Data);
 
-			//Console.WriteLine("Message received from " + args.IpPort + ": " + Encoding.UTF8.GetString(args.Data));
+			var resp = _chaosService.ProcessInvocation(req);
+
+			var data = _binarySerializer.Serialize(resp);
+
+			_server.SendAsync(args.IpPort, data);
 		}
 	}
 }
