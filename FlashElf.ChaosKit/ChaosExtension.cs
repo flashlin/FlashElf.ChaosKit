@@ -11,21 +11,19 @@ namespace FlashElf.ChaosKit
 {
 	public static class ChaosExtension
 	{
-		public static void AddChaosServices(this IServiceCollection services, string chaosServer)
+		public static void AddChaosServices(this IServiceCollection services, Action<ChaosOptions> optionAction)
 		{
-			services.TryAddIOptionsTransient(sp => new ChaosClientConfig()
-			{
-				ChaosServerIp = chaosServer
-			});
+			var chaosOptions = new ChaosOptions(services);
+			optionAction(chaosOptions);
+
+			services.TryAddIOptionsTransient(sp => chaosOptions.ClientConfig);
 			services.AddTransient<IChaosService, ChaosService>();
-			services.TryAddTransient<IChaosClient, ChaosGrpcClient>();
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddTransient<IChaosConverter, ChaosConverter>();
-			services.AddSingleton<IChaosServer, ChaosGrpcServer>();
 			services.AddTransient<IChaosFactory>(sp =>
 			{
-				var chaosFactory = new ChaosFactory(sp.GetService<IChaosSerializer>(), 
+				var chaosFactory = new ChaosFactory(sp.GetService<IChaosSerializer>(),
 					sp.GetService<IChaosClient>());
 				return new CachedChaosFactory(chaosFactory);
 			});
@@ -35,7 +33,7 @@ namespace FlashElf.ChaosKit
 			Func<IServiceProvider, TOptions> create)
 			where TOptions : class, new()
 		{
-			services.TryAddTransient<IOptions<TOptions>>(sp => 
+			services.TryAddTransient<IOptions<TOptions>>(sp =>
 				Options.Create(create(sp)));
 		}
 
@@ -90,8 +88,8 @@ namespace FlashElf.ChaosKit
 			});
 		}
 
-		public static void AddChaosInterfaces(this IServiceCollection services, 
-			Assembly assembly, 
+		public static void AddChaosInterfaces(this IServiceCollection services,
+			Assembly assembly,
 			Func<System.Type, bool> predicate)
 		{
 			var types = assembly.GetTypes();

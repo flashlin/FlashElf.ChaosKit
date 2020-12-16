@@ -23,7 +23,11 @@ namespace ChaosAspNetSiteSample.App_Start
 			builder.RegisterType<MyRepo>().As<IMyRepo>();
 
 			autofacStarter.AddTransient<IChaosSerializer, ChaosJsonSerializer>();
-			autofacStarter.AddChaosServices("127.0.0.1:50050");
+			autofacStarter.AddChaosServices(options=>
+			{
+				options.SetChaosServerIpPort("127.0.0.1:50050");
+				options.UseWebSocket();
+			});
 			//autofacStarter.AddChaosInterfaces(typeof(AutofacConfig).Assembly);
 			autofacStarter.AddChaosTransient<IMyRepo>();
 

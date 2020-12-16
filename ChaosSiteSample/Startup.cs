@@ -21,7 +21,11 @@ namespace ChaosSiteSample
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
-			services.AddChaosServices("127.0.0.1:50050");
+			services.AddChaosServices(options=>
+			{
+				options.SetChaosServerIpPort("127.0.0.1:50050");
+				options.UseWebSocket();
+			});
 			services.AddTransient<IMyRepo, MyRepo>();
 			services.AddChaosTransient<IMyRepo>();
 			//services.AddChaosInterfaces(typeof(IMyRepo).Assembly);

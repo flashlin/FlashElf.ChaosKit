@@ -37,9 +37,9 @@ namespace FlashElf.ChaosKit.Autofac
 			return container;
 		}
 
-		public void AddChaosServices(string chaosServer)
+		public void AddChaosServices(Action<ChaosOptions> chaosAction)
 		{
-			_serviceCollection.AddChaosServices(chaosServer);
+			_serviceCollection.AddChaosServices(chaosAction);
 		}
 
 		public void AddChaosTransient<T>()

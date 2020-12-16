@@ -19,7 +19,7 @@ namespace FlashElf.ChaosKit
 			IChaosConverter chaosConverter)
 		{
 			_chaosConverter = chaosConverter;
-			_channel = new Channel(config.Value.ChaosServerIp, ChannelCredentials.Insecure);
+			_channel = new Channel(config.Value.GetIpPort(), ChannelCredentials.Insecure);
 			_client = new ChaosProtoClient(_channel);
 		}
 

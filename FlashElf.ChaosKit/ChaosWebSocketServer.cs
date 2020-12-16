@@ -1,10 +1,14 @@
-﻿using WatsonWebsocket;
+﻿
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Fleck;
 
 namespace FlashElf.ChaosKit
 {
 	public class ChaosWebSocketServer : IChaosServer
 	{
-		private WatsonWsServer _server;
+		private WebSocketServer _server;
 		private readonly ChaosBinarySerializer _binarySerializer;
 		private readonly IChaosService _chaosService;
 
@@ -18,37 +22,32 @@ namespace FlashElf.ChaosKit
 
 		public void Start()
 		{
-			_server = new WatsonWsServer(Options.ListenIp, Options.ListenPort, false);
-			_server.ClientConnected += ClientConnected;
-			_server.ClientDisconnected += ClientDisconnected;
-			_server.MessageReceived += MessageReceived;
-			_server.Start();
+			_server = new WebSocketServer(GetUrl());
+			_server.Start(MessageReceived);
+		}
+
+		private string GetUrl()
+		{
+			var schema = Options.IsSsl ? "wss" : "ws";
+			return $"{schema}://{Options.ListenIp}:{Options.ListenPort}";
 		}
 
 		public void Shutdown()
 		{
-			_server.Stop();
 		}
 
-		static void ClientConnected(object sender, ClientConnectedEventArgs args)
+		void MessageReceived(IWebSocketConnection webSocketConnection)
 		{
-			//Console.WriteLine("Client connected: " + args.IpPort);
-		}
+			webSocketConnection.OnBinary = data =>
+			{
+				var req = (ChaosInvocation) _binarySerializer.Deserialize(typeof(ChaosInvocation), data);
 
-		static void ClientDisconnected(object sender, ClientDisconnectedEventArgs args)
-		{
-			//Console.WriteLine("Client disconnected: " + args.IpPort);
-		}
+				var resp = _chaosService.ProcessInvocation(req);
 
-		void MessageReceived(object sender, MessageReceivedEventArgs args)
-		{
-			var req = (ChaosInvocation) _binarySerializer.Deserialize(typeof(ChaosInvocation), args.Data);
+				var respData = _binarySerializer.Serialize(resp);
 
-			var resp = _chaosService.ProcessInvocation(req);
-
-			var data = _binarySerializer.Serialize(resp);
-
-			_server.SendAsync(args.IpPort, data);
+				webSocketConnection.Send(respData);
+			};
 		}
 	}
 }
