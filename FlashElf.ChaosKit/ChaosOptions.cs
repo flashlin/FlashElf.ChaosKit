@@ -38,7 +38,7 @@ namespace FlashElf.ChaosKit
 		{
 			Use(() =>
 			{
-				_services.TryAddTransient<IChaosClient, ChaosWebSocketClient>();
+				_services.TryAddTransient<IChaosClient, ChaosWebSocketClient2>();
 				_services.AddSingleton<IChaosServer, ChaosWebSocketServer>();
 			});
 		}
