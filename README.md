@@ -28,7 +28,12 @@ builder.RegisterControllers(Assembly.GetExecutingAssembly());
 builder.RegisterType<MyRepo>().As<IMyRepo>();
 
 //Please add the following chaos code after the production code
-autofacStarter.AddChaosServices("127.0.0.1:50050");
+autofacStarter.AddChaosServices(options=>
+{
+	options.SetChaosServerIpPort("127.0.0.1:50050");
+	options.UseWebSocket();
+	//options.UseGrpc();
+});
 autofacStarter.AddChaosTransient<IMyRepo>();
 
 
@@ -49,7 +54,11 @@ public void ConfigureServices(IServiceCollection services)
 	services.AddTransient<IMyRepo, MyRepo>();
 
     //Please add the following chaos code after the production code
-	services.AddChaosServices("127.0.0.1:50050");
+	services.AddChaosServices(options => { 
+		options.SetChaosServerIpPort("127.0.0.1:50050");
+		options.UseWebSocket();
+		//options.UseGrpc();
+	});
 	services.AddChaosTransient<IMyRepo>();
 }
 
@@ -96,8 +105,51 @@ After the above code, the caller will invoke chao-service that communicate with 
 
 The chaos-server will invoke implement-service(MyRepo) to access staging data and return to chaos-service.
 
+For the communication method between chaos-service and chaos-server.
+We can use following code to use WebSocket protocol.
+```
+options.UseWebSocket();
+```
+
+Or use gRPC protocol.
+```
+options.UseGrpc();
+```
+
 ## Advanced use
 
+For existing old projects, some old projects have many existing interfaces.
 ```C#
-services.AddChaosInterfaces();
+services.AddTransient<IMyRepo1, MyRepo1>();
+services.AddTransient<IMyRepo2, MyRepo2>();
+services.AddTransient<IMyRepo3, MyRepo3>();
+...
 ```
+
+We can add 'ChaosInterface' Attribute code at the interface beginning.
+```
+[ChaosInterface]
+public interface IMyRepo1
+{
+	...
+} 
+
+[ChaosInterface]
+public interface IMyRepo2
+{
+	...
+} 
+```
+
+Then we use following code to generate Chaos-Service for each interface that attach ChaosInterface attribute automatically.
+```C#
+services.AddChaosInterfaces(typeof(IMyRepo1).Assembly);
+```
+
+Another AddChaosInterfaces method. The following code will search all interfaces that contain 'MyRepo' keyword. 
+and generate Chaos-Service automatically.
+```C#
+services.AddChaosInterfaces(typeof(IMyRepo2).Assembly, interfaceType => interfaceType.Name.EndsWith("MyRepo"));
+```
+
+Finally, Happy code to you.
