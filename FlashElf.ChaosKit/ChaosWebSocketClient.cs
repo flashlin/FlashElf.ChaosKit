@@ -1,23 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Threading;
 using Microsoft.Extensions.Options;
-using T1.Standard.Threads;
+using WebSocketSharp;
 
 namespace FlashElf.ChaosKit
 {
 	public class ChaosWebSocketClient : IChaosClient
 	{
 		private readonly IOptions<ChaosClientConfig> _config;
-		private WebSocketClient _client;
+		private WebSocket _client;
 		private readonly ChaosBinarySerializer _binarySerializer;
+		private AutoResetEvent _singal;
+		private ChaosInvocationResp _reply;
 		private readonly IChaosConverter _chaosConverter;
+		private readonly object _lock = new object();
 
-		public ChaosWebSocketClient(IOptions<ChaosClientConfig> config,
-			IChaosConverter chaosConverter)
+		public ChaosWebSocketClient(IOptions<ChaosClientConfig> config, IChaosConverter chaosConverter)
 		{
 			_chaosConverter = chaosConverter;
-			_binarySerializer = new ChaosBinarySerializer();
 			_config = config;
+			_binarySerializer = new ChaosBinarySerializer();
 			Initialize();
 		}
 
@@ -25,23 +27,42 @@ namespace FlashElf.ChaosKit
 		{
 			var data = _binarySerializer.Serialize(invocation);
 
-			var resp = _client.Send(data);
+			object resp = null;
+			lock (_lock)
+			{
+				_singal = new AutoResetEvent(false);
+				_client.Send(data);
 
-			var reply = (ChaosInvocationResp)_binarySerializer.Deserialize(typeof(ChaosInvocationResp), resp);
+				if (!_singal.WaitOne(TimeSpan.FromSeconds(20)))
+				{
+					throw new TimeoutException();
+				}
 
-			return _chaosConverter.ToData(reply);
+				resp = _chaosConverter.ToData(_reply);
+			}
+
+			return resp;
+		}
+
+		private string GetUrl()
+		{
+			var config = _config.Value;
+			var schema = config.IsSsl ? "wss" : "ws";
+			var ipPort = config.GetIpPort();
+			return $"{schema}://{ipPort}/ChaosService";
 		}
 
 		private void Initialize()
 		{
-			var config = _config.Value;
-			_client = new WebSocketClient();
-			_client.Connect(new WebSocketClientOptions()
-			{
-				Ip = config.ChaosServerIp,
-				Port = config.ChaosServerPort,
-				IsSsl = false
-			});
+			_client = new WebSocket(GetUrl());
+			_client.OnMessage += ClientOnOnMessage;
+			_client.Connect();
+		}
+
+		private void ClientOnOnMessage(object sender, MessageEventArgs e)
+		{
+			_reply = (ChaosInvocationResp)_binarySerializer.Deserialize(typeof(ChaosInvocationResp), e.RawData);
+			_singal.Set();
 		}
 	}
 }
