@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -11,9 +13,11 @@ namespace FlashElf.ChaosKit
 	public class ChaosJsonSerializer : IChaosSerializer
 	{
 		private readonly ChaosBinarySerializer _binarySerializer;
+		private readonly TypeFinder _typeFinder;
 
 		public ChaosJsonSerializer()
 		{
+			_typeFinder = new TypeFinder();
 			_binarySerializer = new ChaosBinarySerializer();
 		}
 
@@ -22,19 +26,42 @@ namespace FlashElf.ChaosKit
 			var objType = typeof(T);
 			if (typeof(object) == typeof(T))
 			{
-				var objValue = (object) obj;
+				var objValue = (object)obj;
 				if (objValue == null)
 				{
 					return new byte[0];
 				}
 				objType = obj.GetType();
 			}
-			var json = objType == typeof(string) ? $"{obj}" : JsonSerializer.Serialize(obj);
+
+			if (objType == typeof(string))
+			{
+				return Encoding.UTF8.GetBytes($"{obj}");
+			}
+
+			if (IsGenericDictType(objType))
+			{
+				return SerializeDict(objType, obj);
+			}
+
+			var json = JsonSerializer.Serialize(obj);
 			return Encoding.UTF8.GetBytes(json);
+		}
+
+		private bool IsGenericDictType(Type t)
+		{
+			return t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Dictionary<,>);
 		}
 
 		public object Deserialize(Type type, byte[] data)
 		{
+
+			if (IsGenericDictType(type))
+			{
+				var myDict = (SerializableDictionary)_binarySerializer.Deserialize(typeof(SerializableDictionary), data);
+				return DeserializeDictionary(myDict);
+			}
+
 			var json = Encoding.UTF8.GetString(data);
 			if (typeof(string) == type)
 			{
@@ -44,7 +71,56 @@ namespace FlashElf.ChaosKit
 				}
 				return json;
 			}
+
 			return JsonSerializer.Deserialize(json, type);
+		}
+
+		private IDictionary DeserializeDictionary(SerializableDictionary serializableDictionary)
+		{
+			var keyType = _typeFinder.Find(serializableDictionary.KeyTypeFullName);
+			var valueType = _typeFinder.Find(serializableDictionary.ValueTypeFullName);
+
+			var dict = typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
+			var dictInstance = (IDictionary)Activator.CreateInstance(dict);
+
+			foreach (var item in serializableDictionary.Items)
+			{
+				var key = Deserialize(keyType, item.Key);
+				var value = Deserialize(valueType, item.Value);
+				dictInstance[key] = value;
+			}
+
+			return dictInstance;
+		}
+
+		private byte[] SerializeDict(Type dictType, object dictObj)
+		{
+			var genericArgs = dictType.GetGenericArguments();
+			var keyType = genericArgs[0];
+			var valueType = genericArgs[1];
+
+			var myDict = new SerializableDictionary()
+			{
+				KeyTypeFullName = keyType.FullName,
+				ValueTypeFullName = valueType.FullName
+			};
+
+			var dict = (IDictionary)dictObj;
+			foreach (DictionaryEntry item in dict)
+			{
+				var key = item.Key;
+				var value = item.Value;
+
+				var dictItem = new SerializableKeyValuePair()
+				{
+					Key = Serialize(key),
+					Value = Serialize(value)
+				};
+
+				myDict.Items.Add(dictItem);
+			}
+
+			return _binarySerializer.Serialize(myDict);
 		}
 	}
 }

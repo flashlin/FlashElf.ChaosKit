@@ -33,7 +33,7 @@ namespace FlashElf.ChaosKit
 				_singal = new AutoResetEvent(false);
 				_client.Send(data);
 
-				if (!_singal.WaitOne(TimeSpan.FromSeconds(20)))
+				if (!_singal.WaitOne(TimeSpan.FromSeconds(60)))
 				{
 					throw new TimeoutException();
 				}
@@ -54,6 +54,10 @@ namespace FlashElf.ChaosKit
 
 		private void Initialize()
 		{
+			if (_client != null)
+			{
+				return;
+			}
 			_client = new WebSocket(GetUrl());
 			_client.OnMessage += ClientOnOnMessage;
 			_client.Connect();

@@ -15,5 +15,13 @@ namespace ChaosAspNetSiteSample.Models.Services
 				Name = "Flash"
 			};
 		}
+
+		public Dictionary<int, string> GetIntStringDict()
+		{
+			return new Dictionary<int, string>()
+			{
+				{1, "abc"}
+			};
+		}
 	}
 }

@@ -15,6 +15,10 @@ namespace FlashElf.ChaosKit
 
 		public object ToData(ChaosInvocationResp resp)
 		{
+			if (string.IsNullOrEmpty(resp.DataTypeFullName))
+			{
+				return null;
+			}
 			var dataType = _typeFinder.Find(resp.DataTypeFullName);
 			return _serializer.Deserialize(dataType, resp.Data);
 		}

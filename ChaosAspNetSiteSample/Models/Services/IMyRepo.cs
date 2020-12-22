@@ -1,4 +1,5 @@
-﻿using FlashElf.ChaosKit;
+﻿using System.Collections.Generic;
+using FlashElf.ChaosKit;
 
 namespace ChaosAspNetSiteSample.Models.Services
 {
@@ -6,5 +7,6 @@ namespace ChaosAspNetSiteSample.Models.Services
 	public interface IMyRepo
 	{
 		Customer GetCustomer();
+		Dictionary<int, string> GetIntStringDict();
 	}
 }

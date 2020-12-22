@@ -19,6 +19,8 @@ namespace ChaosAspNetSiteSample.Controllers
 
 		public ActionResult Index()
 		{
+			var dict = _myRepo.GetIntStringDict();
+
 			var vm = new HomeViewModel()
 			{
 				Customer = _myRepo.GetCustomer()
