@@ -26,7 +26,8 @@ namespace ChaosAspNetSiteSample.App_Start
 			autofacStarter.AddChaosServices(options=>
 			{
 				options.SetChaosServerIpPort("127.0.0.1:50050");
-				options.UseWebSocket();
+				//options.UseWebSocket();
+				options.UseGrpc();
 			});
 			//autofacStarter.AddChaosInterfaces(typeof(AutofacConfig).Assembly);
 			autofacStarter.AddChaosTransient<IMyRepo>();

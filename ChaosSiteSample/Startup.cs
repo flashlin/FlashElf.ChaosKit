@@ -24,7 +24,8 @@ namespace ChaosSiteSample
 			services.AddChaosServices(options=>
 			{
 				options.SetChaosServerIpPort("127.0.0.1:50050");
-				options.UseWebSocket();
+				//options.UseWebSocket();
+				options.UseGrpc();
 			});
 			services.AddTransient<IMyRepo, MyRepo>();
 			services.AddChaosTransient<IMyRepo>();
