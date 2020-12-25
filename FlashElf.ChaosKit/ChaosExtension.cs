@@ -5,7 +5,8 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using T1.Standard.DynamicCode;
-using Type = Google.Protobuf.WellKnownTypes.Type;
+using T1.Standard.Common;
+using T1.Standard.ServiceCollectionEx.Decoration;
 
 namespace FlashElf.ChaosKit
 {
@@ -22,12 +23,8 @@ namespace FlashElf.ChaosKit
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddTransient<IChaosConverter, ChaosConverter>();
-			services.AddTransient<IChaosFactory>(sp =>
-			{
-				var chaosFactory = new ChaosFactory(sp.GetService<IChaosSerializer>(), 
-					sp.GetService<IChaosPromiseInvocationClient>());
-				return new CachedChaosFactory(chaosFactory);
-			});
+			services.AddTransient<IChaosFactory, ChaosFactory>();
+			services.Decorate<IChaosFactory, CachedChaosFactory>();
 		}
 
 		private static void TryAddIOptionsTransient<TOptions>(this IServiceCollection services,
