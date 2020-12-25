@@ -10,10 +10,10 @@ namespace FlashElf.ChaosKit
 	{
 		private readonly Type _implementType;
 		private readonly IChaosFactory _chaosFactory;
-		private readonly IChaosPromiseInvocationSubjects _subjects;
+		private readonly IChaosPromiseInvocationClient _subjects;
 
 		public ChaosInterceptor(Type implementType, IChaosFactory chaosFactory,
-			IChaosPromiseInvocationSubjects subjects)
+			IChaosPromiseInvocationClient subjects)
 		{
 			_subjects = subjects;
 			_chaosFactory = chaosFactory;

@@ -10,10 +10,10 @@ namespace FlashElf.ChaosKit
 	public class ChaosFactory : IChaosFactory
 	{
 		private readonly IChaosSerializer _serializer;
-		private readonly IChaosPromiseInvocationSubjects _chaosPromiseInvocationSubjects;
+		private readonly IChaosPromiseInvocationClient _chaosPromiseInvocationSubjects;
 
 		public ChaosFactory(IChaosSerializer serializer, 
-			IChaosPromiseInvocationSubjects chaosPromiseInvocationSubjects)
+			IChaosPromiseInvocationClient chaosPromiseInvocationSubjects)
 		{
 			_chaosPromiseInvocationSubjects = chaosPromiseInvocationSubjects;
 			_serializer = serializer;
