@@ -16,6 +16,7 @@ namespace FlashElf.ChaosKit
 			var chaosOptions = new ChaosOptions(services);
 			optionAction(chaosOptions);
 
+			services.AddSingleton<IChaosPromiseInvocationSubjects, ChaosPromiseInvocationSubjects>();
 			services.TryAddIOptionsTransient(sp => chaosOptions.ClientConfig);
 			services.AddTransient<IChaosService, ChaosService>();
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
@@ -23,8 +24,8 @@ namespace FlashElf.ChaosKit
 			services.AddTransient<IChaosConverter, ChaosConverter>();
 			services.AddTransient<IChaosFactory>(sp =>
 			{
-				var chaosFactory = new ChaosFactory(sp.GetService<IChaosSerializer>(),
-					sp.GetService<IChaosClient>());
+				var chaosFactory = new ChaosFactory(sp.GetService<IChaosSerializer>(), 
+					sp.GetService<IChaosPromiseInvocationSubjects>());
 				return new CachedChaosFactory(chaosFactory);
 			});
 		}

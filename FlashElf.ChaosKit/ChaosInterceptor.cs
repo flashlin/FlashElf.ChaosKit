@@ -9,20 +9,21 @@ namespace FlashElf.ChaosKit
 	public class ChaosInterceptor : IInterceptor
 	{
 		private readonly Type _implementType;
-		private readonly IChaosClient _chaosClient;
 		private readonly IChaosFactory _chaosFactory;
+		private readonly IChaosPromiseInvocationSubjects _subjects;
 
-		public ChaosInterceptor(Type implementType, IChaosFactory chaosFactory, IChaosClient chaosClient)
+		public ChaosInterceptor(Type implementType, IChaosFactory chaosFactory,
+			IChaosPromiseInvocationSubjects subjects)
 		{
+			_subjects = subjects;
 			_chaosFactory = chaosFactory;
 			_implementType = implementType;
-			_chaosClient = chaosClient;
 		}
 
 		public void Intercept(IInvocation invocation)
 		{
 			var chaosInvocation = _chaosFactory.CreateChaosInvocation(_implementType, invocation.Method, invocation.Arguments);
-			invocation.ReturnValue = _chaosClient.Send(chaosInvocation);
+			invocation.ReturnValue = _subjects.Call(chaosInvocation);
 		}
 	}
 }

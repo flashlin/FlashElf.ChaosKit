@@ -33,7 +33,7 @@ namespace FlashElf.ChaosKit
 				_singal = new AutoResetEvent(false);
 				_client.Send(data);
 
-				if (!_singal.WaitOne(TimeSpan.FromSeconds(60)))
+				if (!_singal.WaitOne(TimeSpan.FromSeconds(30)))
 				{
 					throw new TimeoutException();
 				}
