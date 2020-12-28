@@ -19,6 +19,7 @@ namespace FlashElf.ChaosKit
 		public AutoResetEvent WaitEvent { get; set; } = new AutoResetEvent(false);
 		public ChaosInvocation Invocation { get; set; }
 		public object Result { get; set; }
+		public Exception Exception { get; set; }
 		public Action Resolve { get; set; }
 		public Action<Exception> Reject { get; set; }
 		public bool Wait(TimeSpan waitTime)

@@ -15,6 +15,11 @@ namespace FlashElf.ChaosKit
 
 		public object ToData(ChaosInvocationResp resp)
 		{
+			if (resp.Exception != null)
+			{
+				throw new RemotingException(resp.Exception);
+			}
+
 			if (string.IsNullOrEmpty(resp.DataTypeFullName))
 			{
 				return null;

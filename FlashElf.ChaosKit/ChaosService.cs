@@ -21,21 +21,29 @@ namespace FlashElf.ChaosKit
 
 		public ChaosInvocationResp ProcessInvocation(ChaosInvocation chaosInvocation)
 		{
-			var realImplementObject = _serviceResolver.GetService(chaosInvocation.InterfaceTypeFullName);
-			var realImplementType = realImplementObject.GetType();
-			var realImplementInfo = ReflectionClass.Reflection(realImplementType);
+			try
+			{
+				var realImplementObject = _serviceResolver.GetService(chaosInvocation.InterfaceTypeFullName);
+				var realImplementType = realImplementObject.GetType();
+				var realImplementInfo = ReflectionClass.Reflection(realImplementType);
 
-			var requestParameters = chaosInvocation.Parameters;
+				var mi = FindMethod(realImplementInfo, chaosInvocation);
 
-			var mi = FindMethod(realImplementInfo, chaosInvocation);
+				var requestParameters = chaosInvocation.Parameters;
+				var args = requestParameters.DeserializeToArguments(_serializer, _typeFinder)
+					.ToArray();
 
-			var args = requestParameters.DeserializeToArguments(_serializer, _typeFinder)
-				.ToArray();
+				var returnValue = mi.Func(realImplementObject, args);
 
-			var returnValue = mi.Func(realImplementObject, args);
-
-			var invocationReply = ToChaosInvocationResp(chaosInvocation.ReturnTypeFullName, returnValue);
-			return invocationReply;
+				var invocationReply = ToChaosInvocationResp(chaosInvocation.ReturnTypeFullName, returnValue);
+				return invocationReply;
+			}
+			catch (Exception ex)
+			{
+				var invocationReply = ToChaosInvocationResp(chaosInvocation.ReturnTypeFullName, (object)null);
+				invocationReply.Exception = SerializeException.CreateFromException(ex);
+				return invocationReply;
+			}
 		}
 
 		private ChaosInvocationResp ToChaosInvocationResp(string returnTypeFullName, object returnValue)
@@ -62,7 +70,7 @@ namespace FlashElf.ChaosKit
 			{
 				if (!IsMatchMethod(method.MethodInfo, request)) continue;
 
-				var genericTypes= request.GenericTypes
+				var genericTypes = request.GenericTypes
 					.Select(x => _typeFinder.Find(x.ParameterType))
 					.ToArray();
 

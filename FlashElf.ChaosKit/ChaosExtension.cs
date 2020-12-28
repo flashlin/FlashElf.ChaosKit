@@ -3,10 +3,14 @@ using System.Linq;
 using System.Reflection;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using T1.Standard.AOP;
 using T1.Standard.DynamicCode;
 using T1.Standard.Common;
+using T1.Standard.MicrosoftEx;
 using T1.Standard.ServiceCollectionEx.Decoration;
+using T1.Standard.ServiceCollectionEx.Interception;
 
 namespace FlashElf.ChaosKit
 {
@@ -17,9 +21,12 @@ namespace FlashElf.ChaosKit
 			var chaosOptions = new ChaosOptions(services);
 			optionAction(chaosOptions);
 
+			services.TryAddTransient<ILogger, EmptyLogger>();
+			services.AddSingleton<LoggerInterceptor>();
+
 			services.AddSingleton<IChaosPromiseInvocationClient, ChaosPromiseInvocationClient>();
 			services.TryAddIOptionsTransient(sp => chaosOptions.ClientConfig);
-			services.AddTransient<IChaosService, ChaosService>();
+			services.AddTransientWithInterception<IChaosService, ChaosService>(m => m.InterceptBy<LoggerInterceptor>());
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
 			services.AddTransient<IChaosConverter, ChaosConverter>();

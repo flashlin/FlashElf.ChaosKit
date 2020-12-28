@@ -7,5 +7,6 @@ namespace FlashElf.ChaosKit
 	{
 		public string DataTypeFullName { get; set; }
 		public byte[] Data { get; set; }
+		public SerializeException Exception { get; set; }
 	}
 }

@@ -6,7 +6,7 @@ namespace FlashElf.ChaosKit
 	public class ChaosPromiseInvocationClient : IChaosPromiseInvocationClient
 	{
 		private readonly IChaosClient _chaosClient;
-		private Subject<PromiseInvocation> _subjectActions = new Subject<PromiseInvocation>();
+		private readonly Subject<PromiseInvocation> _subjectActions = new Subject<PromiseInvocation>();
 
 		public ChaosPromiseInvocationClient(IChaosClient chaosClient)
 		{
@@ -27,6 +27,12 @@ namespace FlashElf.ChaosKit
 			{
 				throw new TimeoutException();
 			}
+
+			if (promise.Exception != null)
+			{
+				throw promise.Exception;
+			}
+
 			return promise.Result;
 		}
 
@@ -48,9 +54,11 @@ namespace FlashElf.ChaosKit
 			}
 			catch(Exception ex)
 			{
+				promiseInvocation.Exception = ex;
 				if (promiseInvocation.Reject != null) { 
 					promiseInvocation.Reject(ex);
 				}
+				promiseInvocation.WaitEvent.Set();
 			}
 		}
 	}
