@@ -7,6 +7,8 @@ using System.Text.Json;
 using T1.Standard.Common;
 using T1.Standard.DynamicCode;
 using T1.Standard.Extensions;
+using T1.Standard.Serialization;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace FlashElf.ChaosKit
 {
@@ -14,6 +16,10 @@ namespace FlashElf.ChaosKit
 	{
 		private readonly ChaosBinarySerializer _binarySerializer;
 		private readonly TypeFinder _typeFinder;
+		private readonly JsonSerializerOptions _options =new JsonSerializerOptions()
+		{
+			Converters = { new IgnoreInterfaceConverter() }
+		};
 
 		public ChaosJsonSerializer()
 		{
@@ -44,7 +50,7 @@ namespace FlashElf.ChaosKit
 				return SerializeDict(objType, obj);
 			}
 
-			var json = JsonSerializer.Serialize(obj);
+			var json = JsonSerializer.Serialize(obj, _options);
 			return Encoding.UTF8.GetBytes(json);
 		}
 
@@ -72,7 +78,7 @@ namespace FlashElf.ChaosKit
 				return json;
 			}
 
-			return JsonSerializer.Deserialize(json, type);
+			return JsonSerializer.Deserialize(json, type, _options);
 		}
 
 		private IDictionary DeserializeDictionary(SerializableDictionary serializableDictionary)

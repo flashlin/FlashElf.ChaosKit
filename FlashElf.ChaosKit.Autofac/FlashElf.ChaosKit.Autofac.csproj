@@ -21,8 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<PackageOutputPath>..\nupkgs\</PackageOutputPath>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageOutputPath>..\nupkgs\</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,9 +34,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>FlashElf.ChaosKit.Autofac</PackageId>
-	<Version>1.0.29.0</Version>
-	<Authors>Flash</Authors>
-	<Company>Flash</Company>
+    <Version>1.0.30.0</Version>
+    <Authors>Flash</Authors>
+    <Company>Flash</Company>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -82,7 +82,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="T1.Standard">
-      <Version>1.0.50</Version>
+      <Version>1.0.51</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
