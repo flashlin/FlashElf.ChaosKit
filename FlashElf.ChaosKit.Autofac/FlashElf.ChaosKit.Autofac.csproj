@@ -34,7 +34,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>FlashElf.ChaosKit.Autofac</PackageId>
-    <Version>1.0.31.0</Version>
+    <Version>1.0.32.0</Version>
     <Authors>Flash</Authors>
     <Company>Flash</Company>
   </PropertyGroup>

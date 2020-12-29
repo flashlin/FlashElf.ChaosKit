@@ -21,7 +21,7 @@ namespace FlashElf.ChaosKit
 			var chaosOptions = new ChaosOptions(services);
 			optionAction(chaosOptions);
 
-			services.TryAddTransient<ILogger, MemoryLogger>();
+			services.TryAddTransient<ILogger>(sp=> new MemoryLogger("Chaos"));
 			services.AddSingleton<LoggerInterceptor>();
 
 			services.AddSingleton<IChaosPromiseInvocationClient, ChaosPromiseInvocationClient>();
