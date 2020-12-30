@@ -26,12 +26,20 @@ namespace FlashElf.ChaosKit
 
 			services.AddSingleton<IChaosPromiseInvocationClient, ChaosPromiseInvocationClient>();
 			services.TryAddIOptionsTransient(sp => chaosOptions.ClientConfig);
-			services.AddTransientWithInterception<IChaosService, ChaosService>(m => m.InterceptBy<LoggerInterceptor>());
+			services.AddTransientWith<IChaosService, ChaosService>();
 			services.TryAddTransient<IChaosSerializer, ChaosBinarySerializer>();
 			services.TryAddTransient<IChaosServiceResolver, ChaosServiceResolver>();
-			services.AddTransient<IChaosConverter, ChaosConverter>();
-			services.AddTransient<IChaosFactory, ChaosFactory>();
+			services.AddTransientWith<IChaosConverter, ChaosConverter>();
+			services.AddTransientWith<IChaosFactory, ChaosFactory>();
 			services.Decorate<IChaosFactory, CachedChaosFactory>();
+		}
+
+		private static void AddTransientWith<TServiceType, TImplementType>(this IServiceCollection services)
+			where TServiceType : class
+			where TImplementType : class, TServiceType
+		{
+			//services.AddTransient<TServiceType, TImplementType>();
+			services.AddTransientWithInterception<TServiceType, TImplementType>(m => m.InterceptBy<LoggerInterceptor>());
 		}
 
 		private static void TryAddIOptionsTransient<TOptions>(this IServiceCollection services,
@@ -64,7 +72,7 @@ namespace FlashElf.ChaosKit
 			{
 				return;
 			}
-			services.AddTransient<TServiceType, TImplementType>();
+			services.AddTransientWith<TServiceType, TImplementType>();
 		}
 
 		public static void TryAddTransient<TServiceType>(this IServiceCollection services,

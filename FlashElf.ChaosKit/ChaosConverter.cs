@@ -24,6 +24,17 @@ namespace FlashElf.ChaosKit
 			{
 				return null;
 			}
+
+			if (resp.Data == null)
+			{
+				return null;
+			}
+
+			if (resp.Data.Length <= 0)
+			{
+				return null;
+			}
+
 			var dataType = _typeFinder.Find(resp.DataTypeFullName);
 			return _serializer.Deserialize(dataType, resp.Data);
 		}

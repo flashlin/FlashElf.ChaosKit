@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace ChaosAspNetSiteSample.Models.Services
 {
 	public class MyRepo : IMyRepo
 	{
+		private ILogger _logger;
+
+		public MyRepo(ILogger logger)
+		{
+			_logger = logger;
+		}
+
 		public Customer GetCustomer()
 		{
 			return new Customer()

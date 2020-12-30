@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ChaosAspNetSiteSample.Models;
 using ChaosAspNetSiteSample.Models.Services;
+using T1.Standard.MicrosoftEx;
 
 namespace ChaosAspNetSiteSample.Controllers
 {
@@ -28,11 +29,12 @@ namespace ChaosAspNetSiteSample.Controllers
 			return View(vm);
 		}
 
-		public ActionResult About()
+		public ActionResult Test()
 		{
-			ViewBag.Message = "Your application description page.";
+			var logMessages =
+				string.Join("<br />", MemoryLogger.LogList.Select(x => x.Item2));
 
-			return View();
+			return Content(logMessages);
 		}
 
 		public ActionResult Contact()
