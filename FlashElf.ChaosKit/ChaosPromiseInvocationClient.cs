@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Subjects;
+using Microsoft.Extensions.Options;
 
 namespace FlashElf.ChaosKit
 {
@@ -7,10 +8,12 @@ namespace FlashElf.ChaosKit
 	{
 		private readonly IChaosClient _chaosClient;
 		private readonly Subject<PromiseInvocation> _subjectActions = new Subject<PromiseInvocation>();
+		private readonly ChaosClientConfig _config;
 
-		public ChaosPromiseInvocationClient(IChaosClient chaosClient)
+		public ChaosPromiseInvocationClient(IChaosClient chaosClient, IOptions<ChaosClientConfig> clientConfig)
 		{
 			_chaosClient = chaosClient;
+			_config = clientConfig.Value;
 			_subjectActions.Subscribe(this.ProcessAction);
 		}
 
@@ -23,7 +26,7 @@ namespace FlashElf.ChaosKit
 			
 			Publish(promise);
 
-			if (!promise.Wait(TimeSpan.FromSeconds(30)))
+			if (!promise.Wait(_config.WaitTimeout))
 			{
 				throw new TimeoutException();
 			}
