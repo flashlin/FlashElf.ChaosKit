@@ -341,8 +341,8 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="T1.Standard, Version=1.0.52.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\T1.Standard.1.0.52\lib\netstandard2.0\T1.Standard.dll</HintPath>
+    <Reference Include="T1.Standard, Version=1.0.53.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\T1.Standard.1.0.53\lib\netstandard2.0\T1.Standard.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
