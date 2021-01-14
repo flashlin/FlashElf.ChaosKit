@@ -26,7 +26,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="T1.Standard" Version="1.0.52" />
+		<PackageReference Include="T1.Standard" Version="1.0.53" />
 		<PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
 	</ItemGroup>
 

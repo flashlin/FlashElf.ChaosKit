@@ -11,32 +11,43 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashElf.ChaosKit.Autofac",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosAspNetSiteSample", "ChaosAspNetSiteSample\ChaosAspNetSiteSample.csproj", "{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosKitTest", "ChaosKitTest\ChaosKitTest.csproj", "{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaosKitTest", "ChaosKitTest\ChaosKitTest.csproj", "{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug-2.0|Any CPU = Debug-2.0|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BAC1097C-48D8-492A-AD08-7358035F201A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BAC1097C-48D8-492A-AD08-7358035F201A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC1097C-48D8-492A-AD08-7358035F201A}.Debug-2.0|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC1097C-48D8-492A-AD08-7358035F201A}.Debug-2.0|Any CPU.Build.0 = Debug|Any CPU
 		{BAC1097C-48D8-492A-AD08-7358035F201A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAC1097C-48D8-492A-AD08-7358035F201A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Debug-2.0|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Debug-2.0|Any CPU.Build.0 = Debug|Any CPU
 		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2357125-7246-458D-A46E-AA7ABA02D22F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Debug-2.0|Any CPU.ActiveCfg = Debug|Any CPU
+		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Debug-2.0|Any CPU.Build.0 = Debug|Any CPU
 		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F298F4C1-1CF5-4675-B809-D31BBC63CC22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Debug-2.0|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Debug-2.0|Any CPU.Build.0 = Debug|Any CPU
 		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0E480AE-65F3-45D4-93AE-50A6BC8A32C7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}.Debug-2.0|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}.Debug-2.0|Any CPU.Build.0 = Debug|Any CPU
 		{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDD2AB78-B96F-4CF1-8A9D-4323582C49EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

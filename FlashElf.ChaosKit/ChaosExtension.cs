@@ -18,7 +18,7 @@ namespace FlashElf.ChaosKit
 {
 	public static class ChaosExtension
 	{
-		private static HashSet<System.Type> _chaosTypeAdded = new HashSet<Type>();
+		private static readonly HashSet<System.Type> _chaosTypeAdded = new HashSet<Type>();
 
 		public static void AddChaosServices(this IServiceCollection services, Action<ChaosOptions> optionAction)
 		{

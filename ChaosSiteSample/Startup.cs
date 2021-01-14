@@ -35,7 +35,7 @@ namespace ChaosSiteSample
 			});
 
 			services.AddChaosTransient<IMyRepo>();
-			//services.AddChaosTransient<IDecorateRepo>();
+			services.AddChaosTransient<IDecorateRepo>();
 			//services.AddChaosInterfaces(typeof(IMyRepo).Assembly);
 		}
 
