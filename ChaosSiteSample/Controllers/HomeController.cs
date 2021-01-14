@@ -10,7 +10,7 @@ namespace ChaosSiteSample.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly IMyRepo _myRepo;
-		private IDecorateRepo _decorateRepo;
+		private readonly IDecorateRepo _decorateRepo;
 
 		public HomeController(ILogger<HomeController> logger, 
 			IMyRepo myRepo,

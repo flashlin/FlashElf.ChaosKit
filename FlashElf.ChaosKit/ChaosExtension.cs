@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Google.Protobuf.WellKnownTypes;
@@ -11,11 +12,14 @@ using T1.Standard.Common;
 using T1.Standard.MicrosoftEx;
 using T1.Standard.ServiceCollectionEx.Decoration;
 using T1.Standard.ServiceCollectionEx.Interception;
+using Type = System.Type;
 
 namespace FlashElf.ChaosKit
 {
 	public static class ChaosExtension
 	{
+		private static HashSet<System.Type> _chaosTypeAdded = new HashSet<Type>();
+
 		public static void AddChaosServices(this IServiceCollection services, Action<ChaosOptions> optionAction)
 		{
 			var chaosOptions = new ChaosOptions(services);
@@ -53,12 +57,12 @@ namespace FlashElf.ChaosKit
 		public static void AddChaosTransient<TServiceType>(this IServiceCollection services)
 			where TServiceType : class
 		{
-			var isExists = IsRegisted<TServiceType>(services);
-
-			if (isExists)
+			if (_chaosTypeAdded.Contains(typeof(TServiceType)))
 			{
 				return;
 			}
+
+			_chaosTypeAdded.Add(typeof(TServiceType));
 
 			services.AddTransient<TServiceType>(sp =>
 				sp.GetService<IChaosFactory>().CreateChaosService<TServiceType>());
