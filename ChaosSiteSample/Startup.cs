@@ -26,6 +26,7 @@ namespace ChaosSiteSample
 			services.AddTransient<IMyRepo, MyRepo>();
 			services.AddTransient<IDecorateRepo, MyFirstRepo>();
 			services.Decorate<IDecorateRepo, MyFirstDecorateRepo>();
+			services.AddSingleton<ISingletonRepo, MySingletonRepo>();
 
 			services.AddChaosServices(options =>
 			{
@@ -36,6 +37,7 @@ namespace ChaosSiteSample
 
 			services.AddChaosTransient<IMyRepo>();
 			services.AddChaosTransient<IDecorateRepo>();
+			services.AddChaosTransient<ISingletonRepo>();
 			//services.AddChaosInterfaces(typeof(IMyRepo).Assembly);
 		}
 
