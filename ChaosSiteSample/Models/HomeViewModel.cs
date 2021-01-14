@@ -9,5 +9,6 @@ namespace ChaosSiteSample.Models
 	public class HomeViewModel
 	{
 		public Customer Customer { get; set; }
+		public string Name { get; set; }
 	}
 }

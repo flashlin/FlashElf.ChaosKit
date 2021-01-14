@@ -10,9 +10,13 @@ namespace ChaosSiteSample.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly IMyRepo _myRepo;
+		private IDecorateRepo _decorateRepo;
 
-		public HomeController(ILogger<HomeController> logger, IMyRepo myRepo)
+		public HomeController(ILogger<HomeController> logger, 
+			IMyRepo myRepo,
+			IDecorateRepo decorateRepo)
 		{
+			_decorateRepo = decorateRepo;
 			_myRepo = myRepo;
 			_logger = logger;
 		}
@@ -21,7 +25,8 @@ namespace ChaosSiteSample.Controllers
 		{
 			var vm = new HomeViewModel()
 			{
-				Customer = _myRepo.GetCustomer()
+				Customer = _myRepo.GetCustomer(),
+				Name = _decorateRepo.GetName()
 			};
 			return View(vm);
 		}

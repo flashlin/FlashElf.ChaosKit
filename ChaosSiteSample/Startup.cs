@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using T1.Standard.ServiceCollectionEx.Decoration;
 
 namespace ChaosSiteSample
 {
@@ -21,13 +22,18 @@ namespace ChaosSiteSample
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
-			services.AddChaosServices(options=>
+
+			services.AddTransient<IMyRepo, MyRepo>();
+			services.AddTransient<IDecorateRepo, MyFirstRepo>();
+			services.Decorate<IDecorateRepo, MyFirstDecorateRepo>();
+
+			services.AddChaosServices(options =>
 			{
 				options.SetChaosServerIpPort("127.0.0.1:50050");
 				//options.UseWebSocket();
 				options.UseGrpc();
 			});
-			services.AddTransient<IMyRepo, MyRepo>();
+
 			services.AddChaosTransient<IMyRepo>();
 			//services.AddChaosInterfaces(typeof(IMyRepo).Assembly);
 		}
