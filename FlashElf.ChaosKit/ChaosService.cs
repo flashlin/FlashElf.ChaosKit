@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using T1.Standard.Common;
 using T1.Standard.DynamicCode;
+using T1.Standard.Extensions;
 
 namespace FlashElf.ChaosKit
 {
@@ -35,24 +36,35 @@ namespace FlashElf.ChaosKit
 
 				var returnValue = mi.Func(realImplementObject, args);
 
-				var invocationReply = ToChaosInvocationResp(chaosInvocation.ReturnTypeFullName, returnValue);
+				var invocationReply = ToChaosInvocationResp(chaosInvocation, returnValue);
 				return invocationReply;
 			}
 			catch (Exception ex)
 			{
-				var invocationReply = ToChaosInvocationResp(chaosInvocation.ReturnTypeFullName, (object)null);
+				var invocationReply = ToChaosInvocationResp(chaosInvocation, (object)null);
 				invocationReply.Exception = SerializeException.CreateFromException(ex);
 				return invocationReply;
 			}
 		}
 
-		private ChaosInvocationResp ToChaosInvocationResp(string returnTypeFullName, object returnValue)
+		private ChaosInvocationResp ToChaosInvocationResp(ChaosInvocation invocation,
+			object returnValue)
 		{
 			var invocationReply = new ChaosInvocationResp()
 			{
-				DataTypeFullName = returnTypeFullName,
-				Data = _serializer.Serialize(returnValue)
+				DataTypeFullName = invocation.ReturnTypeFullName
 			};
+
+			if (invocation.IsReturnTask)
+			{
+				var taskResult = returnValue.GetTaskResult();
+				invocationReply.Data = _serializer.Serialize(taskResult.value);
+			}
+			else
+			{
+				invocationReply.Data = _serializer.Serialize(returnValue);
+			}
+
 			return invocationReply;
 		}
 

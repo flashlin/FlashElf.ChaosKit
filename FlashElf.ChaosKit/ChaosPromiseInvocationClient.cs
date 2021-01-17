@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using T1.Standard.Common;
+using T1.Standard.DynamicCode;
 
 namespace FlashElf.ChaosKit
 {
@@ -9,12 +13,14 @@ namespace FlashElf.ChaosKit
 		private readonly IChaosClient _chaosClient;
 		private readonly Subject<PromiseInvocation> _subjectActions = new Subject<PromiseInvocation>();
 		private readonly ChaosClientConfig _config;
+		private readonly TypeFinder _typeFinder;
 
 		public ChaosPromiseInvocationClient(IChaosClient chaosClient, IOptions<ChaosClientConfig> clientConfig)
 		{
 			_chaosClient = chaosClient;
 			_config = clientConfig.Value;
 			_subjectActions.Subscribe(this.ProcessAction);
+			_typeFinder = new TypeFinder();
 		}
 
 		public object Call(ChaosInvocation chaosInvocation)
@@ -49,18 +55,22 @@ namespace FlashElf.ChaosKit
 			try
 			{
 				var resp = _chaosClient.Send(promiseInvocation.Invocation);
+
 				promiseInvocation.Result = resp;
-				if( promiseInvocation.Resolve != null) { 
-					promiseInvocation.Resolve();
+				if (promiseInvocation.Invocation.IsReturnTask)
+				{
+					var returnType = _typeFinder.Find(promiseInvocation.Invocation.ReturnTypeFullName);
+					var taskFromResult = DynamicMethod.GetTaskFromResult(returnType);
+					promiseInvocation.Result = taskFromResult(resp);
 				}
+
+				promiseInvocation.Resolve?.Invoke();
 				promiseInvocation.WaitEvent.Set();
 			}
 			catch(Exception ex)
 			{
 				promiseInvocation.Exception = ex;
-				if (promiseInvocation.Reject != null) { 
-					promiseInvocation.Reject(ex);
-				}
+				promiseInvocation.Reject?.Invoke(ex);
 				promiseInvocation.WaitEvent.Set();
 			}
 		}

@@ -82,7 +82,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="T1.Standard">
-      <Version>1.0.53</Version>
+      <Version>1.0.54</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

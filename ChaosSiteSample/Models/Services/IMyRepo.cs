@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using FlashElf.ChaosKit;
 
 namespace ChaosSiteSample.Models.Services
@@ -6,5 +7,6 @@ namespace ChaosSiteSample.Models.Services
 	public interface IMyRepo
 	{
 		Customer GetCustomer();
+		Task<string> GetNameAsync();
 	}
 }

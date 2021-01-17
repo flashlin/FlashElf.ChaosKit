@@ -13,6 +13,7 @@ namespace FlashElf.ChaosKit
 		public string MethodName { get; set; }
 		public List<ChaosParameter> Parameters { get; set; } = new List<ChaosParameter>();
 		public string ReturnTypeFullName { get; set; }
+		public bool IsReturnTask { get; set; }
 
 		public override string ToString()
 		{

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using ChaosSiteSample.Models;
 using ChaosSiteSample.Models.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -24,13 +25,14 @@ namespace ChaosSiteSample.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
 			var vm = new HomeViewModel()
 			{
 				Customer = _myRepo.GetCustomer(),
 				Name = _decorateRepo.GetName(),
 				SingletonName = _singletonRepo.GetSingletonName(),
+				NameAsync = await _myRepo.GetNameAsync()
 			};
 			return View(vm);
 		}

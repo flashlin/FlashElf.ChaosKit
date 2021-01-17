@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Google.Protobuf;
 using T1.Standard.DesignPatterns.Cache;
+using T1.Standard.Extensions;
 
 namespace FlashElf.ChaosKit
 {
@@ -42,6 +43,12 @@ namespace FlashElf.ChaosKit
 			if (invocationMethod.ReturnType != typeof(void))
 			{
 				chaosInvocation.ReturnTypeFullName = invocationMethod.ReturnType.FullName;
+				if (invocationMethod.ReturnType.IsTaskType())
+				{
+					chaosInvocation.IsReturnTask = true;
+					var resultType = invocationMethod.ReturnType.GenericTypeArguments[0];
+					chaosInvocation.ReturnTypeFullName = resultType.FullName;
+				}
 			}
 
 			return chaosInvocation;

@@ -11,5 +11,6 @@ namespace ChaosSiteSample.Models
 		public Customer Customer { get; set; }
 		public string Name { get; set; }
 		public string SingletonName { get; set; }
+		public string NameAsync { get; set; }
 	}
 }

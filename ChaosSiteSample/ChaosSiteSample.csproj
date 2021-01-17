@@ -9,7 +9,6 @@
     <PackageReference Include="AspNetCore.Proxy" Version="4.1.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.33.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="T1.Standard" Version="1.0.53" />
   </ItemGroup>
 
   <ItemGroup>

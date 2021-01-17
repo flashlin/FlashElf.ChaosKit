@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace ChaosSiteSample.Models.Services
 {
 	public class MyRepo : IMyRepo
@@ -8,6 +10,11 @@ namespace ChaosSiteSample.Models.Services
 			{
 				Name = "flash"
 			};
+		}
+
+		public Task<string> GetNameAsync()
+		{
+			return Task.FromResult("FlashAsync");
 		}
 	}
 }
