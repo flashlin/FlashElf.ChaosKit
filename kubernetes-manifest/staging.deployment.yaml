@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chaos-website
+spec:
+  selector:
+    app: chaos-website
+  ports:
+  - name: http
+    protocol: "TCP"
+    port: 80
+    targetPort: 80
+  - name: websocket
+    protocol: "TCP"
+    port: 50050
+    targetPort: 50050
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  name: chaos-website
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: chaos-website
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chaos-website
+    spec:
+      containers:
+        - name: chaos-website
+          image: chaos-website:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+              protocol: TCP
+            - containerPort: 50050
+              protocol: TCP
