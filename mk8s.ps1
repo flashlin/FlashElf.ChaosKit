@@ -37,6 +37,10 @@ Info "Initialize docker-env ..."
 
 & minikube docker-env --shell powershell | Invoke-Expression
 
+if( "install" -eq $action ) {
+    & minikube addons enable ingress
+}
+
 if( "re-deploy" -eq $action ) {
     ReDeploy
 }
