@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chaos-website
+  namespace: default
+data:
+  #<namespace/service name>:<service port>:[PROXY]:[PROXY]
+  50050: "default/chaos-website:50050"

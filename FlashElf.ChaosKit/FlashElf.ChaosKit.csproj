@@ -8,9 +8,9 @@
 		<RepositoryUrl>https://github.com/flashlin/FlashElf.ChaosKit</RepositoryUrl>
 		<PackageIcon></PackageIcon>
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-		<Version>1.0.35</Version>
-		<PackageReleaseNotes>ignore interface property</PackageReleaseNotes>
-		<AssemblyVersion>1.0.35.0</AssemblyVersion>
+		<Version>1.0.36</Version>
+		<PackageReleaseNotes>add ChaosWebApiClient</PackageReleaseNotes>
+		<AssemblyVersion>1.0.36.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

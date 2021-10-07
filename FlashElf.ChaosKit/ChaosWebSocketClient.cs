@@ -5,7 +5,7 @@ using WebSocketSharp;
 
 namespace FlashElf.ChaosKit
 {
-	public class ChaosWebSocketClient : IChaosClient
+    public class ChaosWebSocketClient : IChaosClient
 	{
 		private readonly IOptions<ChaosClientConfig> _config;
 		private WebSocket _client;

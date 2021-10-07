@@ -1,4 +1,23 @@
-apiVersion: extensions/v1beta1
+apiVersion: v1
+kind: Service
+metadata:
+  name: chaos-website
+spec:
+  selector:
+    app: chaos-website
+  ports:
+  - name: http
+    protocol: "TCP"
+    port: 80
+    targetPort: 80
+  - name: websocket
+    protocol: "TCP"
+    port: 50050
+    targetPort: 50050
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
@@ -6,20 +25,21 @@ metadata:
   name: chaos-website
   namespace: default
 spec:
-  replicas: 2
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: chaos-website
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chaos-website
     spec:
       containers:
-        - image: chaos-website:latest
-          name: chaos-website
+        - name: chaos-website
+          image: chaos-website:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 80
               protocol: TCP
             - containerPort: 50050
               protocol: TCP
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
