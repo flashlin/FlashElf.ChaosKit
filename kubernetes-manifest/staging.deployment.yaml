@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  name: chaos-website
+  namespace: default
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+    spec:
+      containers:
+        - image: chaos-website:latest
+          name: chaos-website
+          ports:
+            - containerPort: 80
+              protocol: TCP
+            - containerPort: 50050
+              protocol: TCP
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
