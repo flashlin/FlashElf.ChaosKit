@@ -49,6 +49,10 @@ namespace FlashElf.ChaosKit
 			}
 
 			var json = _jsonSerializer.Serialize(obj);
+            if (string.IsNullOrEmpty(json))
+            {
+                return Array.Empty<byte>();
+            }
 			return Encoding.UTF8.GetBytes(json);
 		}
 
