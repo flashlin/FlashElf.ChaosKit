@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: chaos-website
+  namespace: default
+spec:
+  containers:
+  - image: chaos-website:latest
+    name: chaos-website
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    - containerPort: 50050
+      protocol: TCP
